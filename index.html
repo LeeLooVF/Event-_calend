@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studio Laser xTool S1 — Portail Calendrier de l'Avent & Module Empilable</title>
+  <title>Atelier Laser xTool S1 — Calendrier de l'Avent Cheminée (56+ cm)</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -14,6 +14,20 @@
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            wood: {
+              50: '#fdf8f3',
+              100: '#f9ece0',
+              200: '#f2d5bc',
+              300: '#e7b891',
+              400: '#db9564',
+              500: '#ce7741',
+              600: '#b85d32',
+              700: '#99482b',
+              800: '#7c3b28',
+              900: '#653223',
+            }
           }
         }
       }
@@ -21,350 +35,1803 @@
   </script>
   <style>
     body {
-      background-color: #0b0e14;
+      background-color: #0f1115;
       color: #f3f4f6;
       overflow-x: hidden;
     }
-    .hero-grid {
-      background-color: #0b0e14;
-      background-image: 
-        radial-gradient(at 20% 25%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
-        radial-gradient(at 80% 75%, rgba(14, 165, 233, 0.10) 0px, transparent 50%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
-    }
+    /* Custom scrollbars */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #131722; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    ::-webkit-scrollbar-track { background: #181b22; }
+    ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+    /* Wood & Laser styling */
+    .cad-grid {
+      background-color: #ffffff;
+      background-image: 
+        linear-gradient(to right, rgba(226, 232, 240, 0.7) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.7) 1px, transparent 1px),
+        linear-gradient(to right, rgba(148, 163, 184, 0.45) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.45) 1px, transparent 1px);
+      background-size: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+    }
+    .cad-grid-dark {
+      background-color: #13161c;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 12px 12px, 12px 12px, 60px 60px, 60px 60px;
+    }
+    .slat-interactive {
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+    }
+    .slat-interactive:hover {
+      filter: brightness(1.08) drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
+    }
+    .santa-transition {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    input[type="range"] {
+      accent-color: #f59e0b;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    .hearth-glow {
+      animation: pulseGlow 2.4s infinite ease-in-out;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
 
-  <!-- BARRE DE NAVIGATION GLOBALE -->
-  <header class="bg-[#131722]/95 backdrop-blur-md border-b border-slate-800/90 sticky top-0 z-50 px-4 lg:px-6 py-3">
-    <div class="max-w-[1680px] mx-auto flex flex-wrap items-center justify-between gap-4">
-      
-      <!-- Logo & Titre du Portail -->
-      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-orange-600 to-rose-600 flex items-center justify-center shadow-lg shadow-amber-900/30 border border-amber-400/30">
+  <!-- TOP HEADER BAR -->
+  <header class="bg-[#161920]/95 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-40 px-4 lg:px-6 py-3">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-4">
+      <!-- Brand & Project Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 flex items-center justify-center shadow-lg shadow-orange-900/30 border border-amber-400/30">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">Studio Laser xTool S1</h1>
-            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
-              Suite Conception 2-en-1
+            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white">Calendrier de l'Avent « Cheminée de Noël »</h1>
+            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              xTool S1 40W Ready
             </span>
           </div>
-          <p class="text-xs text-slate-400">Calendrier Cheminée (56+ cm) & Système de Modules Empilables à Double Fente</p>
+          <p class="text-xs text-slate-400">Simulateur 2.5D interactif & Générateur vectoriel .SVG échelle 1:1 (Plateau 485 × 310 mm)</p>
         </div>
       </div>
 
-      <!-- Sélecteur d'Application (Onglets) -->
-      <nav class="flex flex-wrap items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 gap-1">
-        <button onclick="switchTab('home')" id="nav-home" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-500 text-slate-950 shadow flex items-center gap-1.5">
-          <span>🏠</span> Accueil & Comparatif
-        </button>
-        <button onclick="switchTab('app1')" id="nav-app1" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-300 hover:text-white flex items-center gap-1.5">
-          <span>🎅</span> 1. Calendrier Cheminée
-        </button>
-        <button onclick="switchTab('app2')" id="nav-app2" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-300 hover:text-white flex items-center gap-1.5">
-          <span>🧱</span> 2. Module Empilable
-        </button>
-        <button onclick="switchTab('split')" id="nav-split" class="hidden lg:flex px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-300 hover:text-white items-center gap-1.5">
-          <span>⚡</span> Vue Double (Split)
-        </button>
-      </nav>
-
-      <!-- Choix de la source (Cloudflare Pages vs Fichiers Locaux) -->
-      <div class="flex items-center gap-2">
-        <div class="hidden xl:flex items-center gap-1.5 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1 text-[11px]">
-          <span class="text-slate-400">Source :</span>
-          <select id="source-mode" onchange="updateIframeSources()" class="bg-transparent font-mono font-semibold text-emerald-400 focus:outline-none cursor-pointer">
-            <option value="cloud" class="bg-slate-900 text-white">En ligne (.pages.dev)</option>
-            <option value="local" class="bg-slate-900 text-white">Fichiers locaux (.html)</option>
-          </select>
+      <!-- Real-Time Dimension Badges -->
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <div class="bg-slate-900/90 border border-amber-500/40 rounded-lg px-3 py-1.5 flex items-center gap-2">
+          <span class="text-[11px] uppercase tracking-wider text-slate-400">Plateau Jour :</span>
+          <span id="badge-slat-dim" class="text-sm font-mono font-bold text-amber-400">11.0 × 6.0 cm</span>
         </div>
-        <a href="https://event--calend.pages.dev/" target="_blank" rel="noopener" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium flex items-center gap-1 transition" title="Ouvrir le Calendrier dans un nouvel onglet">
-          <span>Calendrier</span>
-          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-        </a>
-        <a href="https://module-empilable.pages.dev/" target="_blank" rel="noopener" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium flex items-center gap-1 transition" title="Ouvrir le Module Empilable dans un nouvel onglet">
-          <span>Module</span>
-          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-        </a>
-      </div>
+        <div class="bg-slate-900/90 border border-slate-700/70 rounded-lg px-3 py-1.5 flex items-center gap-2">
+          <span class="text-[11px] uppercase tracking-wider text-slate-400">Structure :</span>
+          <span id="badge-struct-h" class="text-sm font-mono font-bold text-amber-400">56.0 cm</span>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-700/70 rounded-lg px-3 py-1.5 flex items-center gap-2">
+          <span class="text-[11px] uppercase tracking-wider text-slate-400">Avec Père Noël :</span>
+          <span id="badge-total-h" class="text-sm font-mono font-bold text-emerald-400">62.5 cm</span>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-700/70 rounded-lg px-3 py-1.5 hidden md:flex items-center gap-2">
+          <span class="text-[11px] uppercase tracking-wider text-slate-400">Bois :</span>
+          <span id="badge-wood-t" class="text-sm font-mono font-bold text-sky-400">3.0 mm</span>
+        </div>
 
+        <!-- View Mode Switcher -->
+        <div class="bg-slate-900 p-1 rounded-xl border border-slate-800 flex items-center gap-1">
+          <button onclick="setLayoutMode('split')" id="btn-mode-split" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-500 text-slate-950 shadow">
+            Vue Studio (Côte à Côte)
+          </button>
+          <button onclick="setLayoutMode('sim')" id="btn-mode-sim" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-300 hover:text-white">
+            Simulateur 3D/2.5D
+          </button>
+          <button onclick="setLayoutMode('cad')" id="btn-mode-cad" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-300 hover:text-white">
+            Plans Laser (.SVG)
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- CONTENU PRINCIPAL -->
-  <main class="flex-1 flex flex-col">
-
-    <!-- =============================================================== -->
-    <!-- VUE 1 : ACCUEIL PORTAIL & PRÉSENTATION DES DEUX OUTILS          -->
-    <!-- =============================================================== -->
-    <section id="view-home" class="flex-1 hero-grid py-10 px-4 lg:px-8">
-      <div class="max-w-7xl mx-auto space-y-10">
-
-        <!-- Bannière d'introduction -->
-        <div class="text-center max-w-3xl mx-auto space-y-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-semibold">
-            <span>✨ Calibré pour découpeuse laser xTool S1 40W (Plateau 485 × 310 mm)</span>
+  <!-- GLOBAL PARAMETRIC CONTROL BAR -->
+  <section class="bg-[#1b1f2a] border-b border-slate-800/90 px-4 lg:px-6 py-3 shadow-inner">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex flex-wrap items-center gap-3 sm:gap-5">
+        <!-- Slat Length (110 mm = 11 cm) -->
+        <div class="flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-xl">
+          <label for="param-slat-l" class="text-xs font-semibold text-amber-300 whitespace-nowrap">
+            Longueur Plateau :
+          </label>
+          <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+            <button onclick="adjustParam('param-slat-l', -5)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">-</button>
+            <input type="number" id="param-slat-l" value="110" min="80" max="135" step="5" onchange="onParamChange()" class="w-14 bg-transparent text-center font-mono text-xs font-bold text-amber-400 focus:outline-none">
+            <button onclick="adjustParam('param-slat-l', 5)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">+</button>
           </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Votre Atelier Complet pour le <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500">Calendrier de l'Avent Cheminée</span>
-          </h2>
-          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
-            Retrouvez au même endroit vos deux générateurs paramétriques <strong>échelle 1:1 (.SVG)</strong> : la version <strong>Cheminée Monobloc Complète</strong> et l'étude du <strong>Module Empilable à Double Fente Traversante (sans rail)</strong>.
-          </p>
+          <span class="text-[11px] text-amber-300/80 font-mono">mm (11cm)</span>
         </div>
 
-        <!-- Les 2 Cartes Principales des Applications -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-          <!-- CARTE 1 : CALENDRIER DE L'AVENT CHEMINÉE -->
-          <div class="bg-[#141822]/90 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-6 shadow-2xl flex flex-col justify-between transition-all group">
-            <div class="space-y-5">
-              <div class="flex items-start justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-2xl">
-                    🎅
-                  </div>
-                  <div>
-                    <span class="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-semibold">Application #1 • Structure Complète</span>
-                    <h3 class="text-xl font-bold text-white group-hover:text-amber-300 transition">Calendrier de l'Avent « Cheminée »</h3>
-                  </div>
-                </div>
-                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-bold">
-                  5 Planches .SVG
-                </span>
-              </div>
-
-              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Simulateur interactif 2.5D de la descente du Père Noël jour après jour (du 1er au 24 décembre) et générateur vectoriel complet incluant le conduit, le foyer bas en pierres, les 24 plateaux numérotés et le pack de décorations 3D.
-              </p>
-
-              <!-- Spécifications clés -->
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
-                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5">
-                  <div class="text-[10px] text-slate-400 uppercase">Hauteur Totale</div>
-                  <div class="text-sm font-mono font-bold text-amber-400">56.0 à 62.5 cm</div>
-                </div>
-                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5">
-                  <div class="text-[10px] text-slate-400 uppercase">24 Plateaux Jour</div>
-                  <div class="text-sm font-mono font-bold text-white">110 × 60 mm</div>
-                </div>
-                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 col-span-2 sm:col-span-1">
-                  <div class="text-[10px] text-slate-400 uppercase">Décorations</div>
-                  <div class="text-sm font-mono font-bold text-rose-400">Sapin 3D, Renne, Feu</div>
-                </div>
-              </div>
-
-              <ul class="space-y-1.5 text-xs text-slate-300 border-t border-slate-800/80 pt-4">
-                <li class="flex items-center gap-2"><span class="text-amber-400">✔</span> Animation de descente du Père Noël du plateau n°1 jusqu'à l'âtre</li>
-                <li class="flex items-center gap-2"><span class="text-amber-400">✔</span> Texte du manteau de cheminée personnalisable (ex. <em>JOYEUX NOËL</em>)</li>
-                <li class="flex items-center gap-2"><span class="text-amber-400">✔</span> Calques laser prêts pour XCS : <code class="text-red-400">#FF0000</code> (Découpe) et <code class="text-blue-400">#0000FF</code> (Marquage)</li>
-              </ul>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap items-center gap-3">
-              <button onclick="switchTab('app1')" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2">
-                <span>Ouvrir dans le Studio</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-              </button>
-              <a href="https://event--calend.pages.dev/" target="_blank" rel="noopener" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5">
-                <span>event--calend.pages.dev</span>
-                <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-              </a>
-            </div>
+        <!-- Slat Width (60 mm = 6 cm) -->
+        <div class="flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-xl">
+          <label for="param-slat-w" class="text-xs font-semibold text-amber-300 whitespace-nowrap">
+            Largeur Plateau :
+          </label>
+          <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+            <button onclick="adjustParam('param-slat-w', -5)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">-</button>
+            <input type="number" id="param-slat-w" value="60" min="35" max="75" step="5" onchange="onParamChange()" class="w-12 bg-transparent text-center font-mono text-xs font-bold text-amber-400 focus:outline-none">
+            <button onclick="adjustParam('param-slat-w', 5)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">+</button>
           </div>
-
-          <!-- CARTE 2 : MODULE EMPILABLE DOUBLE FENTE -->
-          <div class="bg-[#141822]/90 border border-slate-800 hover:border-sky-500/50 rounded-2xl p-6 shadow-2xl flex flex-col justify-between transition-all group">
-            <div class="space-y-5">
-              <div class="flex items-start justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-sky-500/15 border border-sky-500/40 flex items-center justify-center text-2xl">
-                    🧱
-                  </div>
-                  <div>
-                    <span class="text-[11px] font-mono uppercase tracking-wider text-sky-400 font-semibold">Application #2 • Architecture Modulaire</span>
-                    <h3 class="text-xl font-bold text-white group-hover:text-sky-300 transition">Module Empilable (Double Fente & Sans Rail)</h3>
-                  </div>
-                </div>
-                <span class="px-2.5 py-1 rounded-lg bg-sky-500/15 border border-sky-500/30 text-sky-300 font-mono text-xs font-bold">
-                  0 Rail Interne
-                </span>
-              </div>
-
-              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Visualiseur 3D isométrique interactif et générateur de découpe pour concevoir le conduit sous forme d'étages individuels empilables. Chaque plateau traverse le module et s'encastre dans les <strong>2 fentes latérales opposées</strong>.
-              </p>
-
-              <!-- Spécifications clés -->
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
-                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5">
-                  <div class="text-[10px] text-slate-400 uppercase">Dimensions Module</div>
-                  <div class="text-sm font-mono font-bold text-sky-400">110 × 67.2 × 22 mm</div>
-                </div>
-                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5">
-                  <div class="text-[10px] text-slate-400 uppercase">2× Fentes Opposées</div>
-                  <div class="text-sm font-mono font-bold text-white">60.6 × 3.5 mm</div>
-                </div>
-                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 col-span-2 sm:col-span-1">
-                  <div class="text-[10px] text-slate-400 uppercase">Pièces / Étage</div>
-                  <div class="text-sm font-mono font-bold text-emerald-400">4 Parois Seules</div>
-                </div>
-              </div>
-
-              <ul class="space-y-1.5 text-xs text-slate-300 border-t border-slate-800/80 pt-4">
-                <li class="flex items-center gap-2"><span class="text-sky-400">✔</span> Maintien en pont sur les 2 fentes opposées (aucun basculement possible)</li>
-                <li class="flex items-center gap-2"><span class="text-sky-400">✔</span> Économise 48 petits rails internes à découper et coller sur 24 étages</li>
-                <li class="flex items-center gap-2"><span class="text-sky-400">✔</span> Export SVG à l'unité (1 module + plateau test) ou par planche de 6 modules</li>
-              </ul>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap items-center gap-3">
-              <button onclick="switchTab('app2')" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-slate-950 font-bold text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2">
-                <span>Ouvrir dans le Studio</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-              </button>
-              <a href="https://module-empilable.pages.dev/" target="_blank" rel="noopener" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5">
-                <span>module-empilable.pages.dev</span>
-                <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-              </a>
-            </div>
-          </div>
-
+          <span class="text-[11px] text-amber-300/80 font-mono">mm (6cm)</span>
         </div>
 
-        <!-- Bandeau Comparatif & Compatibilité Mécanique -->
-        <div class="bg-[#141822]/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-          <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-            <div>
-              <h3 class="text-base font-bold text-white flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                Compatibilité Standardisée entre vos 2 Projets
-              </h3>
-              <p class="text-xs text-slate-400">Les deux outils partagent exactement le même standard dimensionnel pour les plateaux journaliers et les paramètres laser xTool S1.</p>
-            </div>
-            <button onclick="switchTab('split')" class="hidden lg:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-xs font-semibold transition">
-              <span>⚡ Ouvrir les 2 outils côte à côte</span>
+        <!-- Wood Thickness with 3mm / 6mm presets -->
+        <div class="flex items-center gap-2">
+          <label for="param-wood" class="text-xs font-medium text-slate-300 whitespace-nowrap">
+            Bois :
+          </label>
+          <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+            <button onclick="adjustParam('param-wood', -0.1)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">-</button>
+            <input type="number" id="param-wood" value="3.0" min="2.0" max="6.0" step="0.1" onchange="onParamChange()" class="w-12 bg-transparent text-center font-mono text-xs font-bold text-sky-400 focus:outline-none">
+            <button onclick="adjustParam('param-wood', 0.1)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">+</button>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="setWoodPreset(3.0)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300 border border-slate-700">3mm</button>
+            <button onclick="setWoodPreset(6.0)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300 border border-slate-700">6mm</button>
+          </div>
+        </div>
+
+        <!-- Structure Height -->
+        <div class="flex items-center gap-2">
+          <label for="param-height" class="text-xs font-medium text-slate-300 whitespace-nowrap">
+            HauteurStructure :
+          </label>
+          <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+            <button onclick="adjustParam('param-height', -10)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">-</button>
+            <input type="number" id="param-height" value="560" min="550" max="620" step="5" onchange="onParamChange()" class="w-14 bg-transparent text-center font-mono text-xs font-bold text-amber-400 focus:outline-none">
+            <button onclick="adjustParam('param-height', 10)" class="px-2 py-1 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold">+</button>
+          </div>
+          <span class="text-[11px] text-slate-500 font-mono">mm</span>
+        </div>
+
+        <!-- Slat Clearance -->
+        <div class="flex items-center gap-1.5">
+          <label for="param-clearance" class="text-xs font-medium text-slate-300 whitespace-nowrap" title="Jeu ajouté aux 24 fentes pour que les plateaux 11x6cm coulissent sans bloquer">
+            Jeu fentes :
+          </label>
+          <input type="number" id="param-clearance" value="0.40" min="0.10" max="1.00" step="0.05" onchange="onParamChange()" class="w-14 bg-slate-900 border border-slate-700 rounded-lg py-1 px-1.5 text-center font-mono text-xs font-bold text-sky-400 focus:outline-none">
+          <span class="text-[11px] text-slate-500 font-mono">mm</span>
+        </div>
+
+        <!-- Laser Kerf -->
+        <div class="hidden 2xl:flex items-center gap-1.5">
+          <label for="param-kerf" class="text-xs font-medium text-slate-300 whitespace-nowrap" title="Compensation du trait de coupe laser pour un emboîtement serré des tenons">
+            Kerf :
+          </label>
+          <input type="number" id="param-kerf" value="0.15" min="0.00" max="0.35" step="0.05" onchange="onParamChange()" class="w-14 bg-slate-900 border border-slate-700 rounded-lg py-1 px-1.5 text-center font-mono text-xs font-bold text-rose-400 focus:outline-none">
+          <span class="text-[11px] text-slate-500 font-mono">mm</span>
+        </div>
+      </div>
+
+      <!-- Quick Action: Download All 5 SVG Sheets -->
+      <div class="flex items-center gap-2">
+        <button onclick="openXcsModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          Réglages xTool S1
+        </button>
+        <button onclick="downloadAllSVGs()" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-semibold shadow-lg shadow-emerald-950/50 flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Télécharger les 5 Planches (.SVG)
+        </button>
+      </div>
+    </div>
+
+    <!-- CHRISTMAS DECORATION & ENGRAVING OPTIONS BAR -->
+    <div class="max-w-[1600px] mx-auto mt-3 pt-2.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-3 sm:gap-5">
+        <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+          <span>🎄</span> Touche Noël (Découpes & Gravures) :
+        </span>
+
+        <label class="flex items-center gap-1.5 text-xs text-slate-200 cursor-pointer select-none bg-slate-900/80 border border-slate-700/80 px-2.5 py-1 rounded-lg hover:border-amber-500/50 transition">
+          <input type="checkbox" id="chk-deco-facade" checked onchange="onDecoChange()" class="rounded text-amber-500 focus:ring-0">
+          <span>Gravures Façade (Flocons, Houx, Étoiles, Guirlande)</span>
+        </label>
+
+        <label class="flex items-center gap-1.5 text-xs text-slate-200 cursor-pointer select-none bg-slate-900/80 border border-slate-700/80 px-2.5 py-1 rounded-lg hover:border-amber-500/50 transition">
+          <input type="checkbox" id="chk-deco-slats" checked onchange="onDecoChange()" class="rounded text-amber-500 focus:ring-0">
+          <span>Motifs Noël sur les 24 Plateaux (Flocons, Sapins, Cadeaux)</span>
+        </label>
+
+        <label class="flex items-center gap-1.5 text-xs text-slate-200 cursor-pointer select-none bg-emerald-950/40 border border-emerald-500/40 px-2.5 py-1 rounded-lg hover:border-emerald-400 transition">
+          <input type="checkbox" id="chk-deco-3d" checked onchange="onDecoChange()" class="rounded text-emerald-500 focus:ring-0">
+          <span class="text-emerald-300 font-medium">+ Accessoires 3D à découper (Sapin 3D, Feu de bois, Renne, Chaussettes)</span>
+        </label>
+      </div>
+
+      <!-- Custom Engraved Mantel Text -->
+      <div class="flex items-center gap-2">
+        <label for="param-mantel-text" class="text-xs text-slate-400 whitespace-nowrap">Texte gravé sur le foyer :</label>
+        <input type="text" id="param-mantel-text" value="JOYEUX NOËL" maxlength="22" oninput="onDecoChange()" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs font-mono font-bold text-amber-300 w-40 focus:outline-none focus:border-amber-500">
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto p-4 lg:p-6">
+    <div id="workspace-grid" class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: 2.5D INTERACTIVE SIMULATOR (5 cols in split mode) -->
+      <div id="panel-simulator" class="xl:col-span-5 bg-[#161922] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+        <!-- Simulator Header -->
+        <div class="p-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 bg-[#1a1e29]">
+          <div>
+            <h2 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+              Simulateur d'Assemblage & Descente du Père Noël
+            </h2>
+            <p class="text-[11px] text-slate-400 mt-0.5">Cliquez sur une tirette (1 à 24) ou utilisez le curseur de décembre</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="toggleSimViewMode()" id="btn-sim-perspective" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-medium text-amber-300 transition">
+              Vue : 2.5D Perspective
+            </button>
+            <button onclick="toggleSimDimensions()" id="btn-sim-dims" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-medium text-sky-300 transition">
+              Cotes : ON
             </button>
           </div>
+        </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
-            <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-3.5">
-              <div class="text-slate-400 font-medium mb-1">Standard des 24 Plateaux</div>
-              <div class="text-base font-mono font-bold text-amber-400">110 × 60 mm (11×6 cm)</div>
-              <div class="text-[11px] text-slate-400 mt-1">+ Médaillon numéroté Ø 22 mm</div>
+        <!-- Advent Day Controls & Photo Presets -->
+        <div class="p-4 bg-[#13161f] border-b border-slate-800/80 space-y-3">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-slate-300">Progression :</span>
+              <span id="sim-day-badge" class="px-2.5 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 font-mono text-xs font-bold">
+                1er Décembre (0/24 retirées)
+              </span>
             </div>
-            <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-3.5">
-              <div class="text-slate-400 font-medium mb-1">Format Utile xTool S1</div>
-              <div class="text-base font-mono font-bold text-emerald-400">485 × 310 mm</div>
-              <div class="text-[11px] text-slate-400 mt-1">Export SVG 1:1 en millimètres</div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="pullNextSlat()" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-xs transition shadow">
+                + Tirer le jour suivant
+              </button>
+              <button onclick="toggleAutoPlay()" id="btn-autoplay" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium transition">
+                ▶ Animer
+              </button>
+              <button onclick="resetSlats()" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-rose-950/60 hover:text-rose-300 text-slate-400 border border-slate-700 text-xs transition" title="Remettre les 24 tirettes">
+                ↺
+              </button>
             </div>
-            <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-3.5">
-              <div class="text-slate-400 font-medium mb-1">Découpe Laser (#FF0000)</div>
-              <div class="text-base font-mono font-bold text-red-400">85% • 14 mm/s • 1 passe</div>
-              <div class="text-[11px] text-slate-400 mt-1">Pour contreplaqué 3.0 mm</div>
-            </div>
-            <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-3.5">
-              <div class="text-slate-400 font-medium mb-1">Marquage / Score (#0000FF)</div>
-              <div class="text-base font-mono font-bold text-blue-400">35% • 160 mm/s • 1 passe</div>
-              <div class="text-[11px] text-slate-400 mt-1">À traiter en 1er dans XCS</div>
-            </div>
+          </div>
+
+          <!-- Slider 0 to 24 -->
+          <div class="flex items-center gap-3">
+            <span class="text-[11px] font-mono text-slate-400">Début</span>
+            <input type="range" id="advent-slider" min="0" max="24" value="0" oninput="onSliderDayChange(this.value)" class="flex-1 h-2 bg-slate-800 rounded-lg cursor-pointer">
+            <span class="text-[11px] font-mono text-amber-400 font-bold">24 Déc</span>
+          </div>
+
+          <!-- 4 Reference Photo Presets -->
+          <div class="grid grid-cols-4 gap-1.5 pt-1">
+            <button onclick="onSliderDayChange(0)" class="px-2 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 hover:text-white transition text-center">
+              <div class="font-semibold text-amber-400">Photo 1</div>
+              <div class="text-[10px] text-slate-400">Complet (Haut)</div>
+            </button>
+            <button onclick="onSliderDayChange(12)" class="px-2 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 hover:text-white transition text-center">
+              <div class="font-semibold text-amber-400">Photo 4</div>
+              <div class="text-[10px] text-slate-400">Mi-chemin (J12)</div>
+            </button>
+            <button onclick="onSliderDayChange(21)" class="px-2 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 hover:text-white transition text-center">
+              <div class="font-semibold text-amber-400">Photo 2</div>
+              <div class="text-[10px] text-slate-400">Bas (J21)</div>
+            </button>
+            <button onclick="onSliderDayChange(24)" class="px-2 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 hover:text-white transition text-center">
+              <div class="font-semibold text-emerald-400">Photo 3</div>
+              <div class="text-[10px] text-slate-400">Dans l'âtre (J24)</div>
+            </button>
           </div>
         </div>
 
-      </div>
-    </section>
+        <!-- Interactive SVG Canvas of the Assembled Chimney -->
+        <div class="relative flex-1 min-h-[600px] cad-grid-dark flex items-center justify-center p-3 select-none overflow-hidden">
+          <div id="simulator-svg-container" class="w-full h-full flex items-center justify-center"></div>
 
-    <!-- =============================================================== -->
-    <!-- VUE 2 : APPLICATION 1 (CALENDRIER DE L'AVENT CHEMINÉE)          -->
-    <!-- =============================================================== -->
-    <section id="view-app1" class="hidden flex-1 flex-col bg-[#0f1115]">
-      <iframe id="iframe-app1" src="https://event--calend.pages.dev/" class="w-full flex-1 border-0 min-h-[calc(100vh-65px)]" title="Calendrier de l'Avent Cheminée"></iframe>
-    </section>
-
-    <!-- =============================================================== -->
-    <!-- VUE 3 : APPLICATION 2 (MODULE EMPILABLE DOUBLE FENTE)           -->
-    <!-- =============================================================== -->
-    <section id="view-app2" class="hidden flex-1 flex-col bg-[#0d1017]">
-      <iframe id="iframe-app2" src="https://module-empilable.pages.dev/" class="w-full flex-1 border-0 min-h-[calc(100vh-65px)]" title="Module Empilable du Conduit"></iframe>
-    </section>
-
-    <!-- =============================================================== -->
-    <!-- VUE 4 : MODE CÔTE À CÔTE (SPLIT VIEW SUR GRAND ÉCRAN)           -->
-    <!-- =============================================================== -->
-    <section id="view-split" class="hidden flex-1 grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800 bg-[#0b0e14]">
-      <div class="flex flex-col h-[calc(100vh-65px)]">
-        <div class="bg-[#161922] px-4 py-1.5 border-b border-slate-800 flex items-center justify-between text-xs">
-          <span class="font-bold text-amber-400">🎅 1. Calendrier de l'Avent Cheminée</span>
-          <a href="https://event--calend.pages.dev/" target="_blank" class="text-slate-400 hover:text-white font-mono text-[11px]">event--calend.pages.dev ↗</a>
+          <!-- Floating Legend overlay -->
+          <div class="absolute bottom-3 left-3 right-3 bg-slate-950/85 backdrop-blur-md border border-slate-800/90 rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1.5 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#e8d0b3] border border-[#8b5a2b]"></span>
+                Pairs (2..24) à gauche
+              </span>
+              <span class="flex items-center gap-1.5 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#dfc19e] border border-[#8b5a2b]"></span>
+                Impairs (1..23) à droite
+              </span>
+            </div>
+            <span id="santa-status-text" class="font-mono text-amber-400 font-semibold">
+              Père Noël sur la tirette n°1
+            </span>
+          </div>
         </div>
-        <iframe id="iframe-split1" src="https://event--calend.pages.dev/" class="w-full flex-1 border-0" title="Calendrier Split"></iframe>
       </div>
-      <div class="flex flex-col h-[calc(100vh-65px)]">
-        <div class="bg-[#161922] px-4 py-1.5 border-b border-slate-800 flex items-center justify-between text-xs">
-          <span class="font-bold text-sky-400">🧱 2. Module Empilable (Double Fente & Sans Rail)</span>
-          <a href="https://module-empilable.pages.dev/" target="_blank" class="text-slate-400 hover:text-white font-mono text-[11px]">module-empilable.pages.dev ↗</a>
+
+      <!-- RIGHT COLUMN: PARAMETRIC LASER CUT GENERATOR (.SVG 1:1) (7 cols in split mode) -->
+      <div id="panel-cad" class="xl:col-span-7 bg-[#161922] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+        <!-- CAD Header & Sheet Tabs -->
+        <div class="p-4 border-b border-slate-800 bg-[#1a1e29] flex flex-col gap-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"/></svg>
+                Plans de Découpe Vectoriels (.SVG Échelle 1:1 — Plateaux 11 × 6 cm)
+              </h2>
+              <p class="text-[11px] text-slate-400 mt-0.5">5 planches sans aucun débordement calibrées pour <strong class="text-slate-200">xTool S1 (485 × 310 mm)</strong></p>
+            </div>
+            <span id="cad-slot-info" class="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-[11px] font-semibold">
+              Fentes flancs : 60.4 × 3.4 mm
+            </span>
+          </div>
+
+          <!-- Sheet Selector Tabs (5 Sheets + Global View) -->
+          <div class="flex flex-wrap items-center bg-slate-900 p-1 rounded-xl border border-slate-800 gap-1">
+            <button onclick="selectSheet(1)" id="tab-sheet-1" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white">
+              1. Conduit (Avant/Dos)
+            </button>
+            <button onclick="selectSheet(2)" id="tab-sheet-2" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white">
+              2. Flancs (24 fentes 6cm) & Père Noël
+            </button>
+            <button onclick="selectSheet(3)" id="tab-sheet-3" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white">
+              3. Foyer Bas
+            </button>
+            <button onclick="selectSheet(4)" id="tab-sheet-4" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold transition bg-rose-600 text-white shadow">
+              4. Plateaux 1 à 12 (11×6 cm)
+            </button>
+            <button onclick="selectSheet(5)" id="tab-sheet-5" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white">
+              5. Plateaux 13 à 24 (11×6 cm)
+            </button>
+            <button onclick="selectSheet(0)" id="tab-sheet-0" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold transition text-amber-400 hover:text-white ml-auto" title="Voir les 5 planches simultanément">
+              Vue Globale (×5)
+            </button>
+          </div>
         </div>
-        <iframe id="iframe-split2" src="https://module-empilable.pages.dev/" class="w-full flex-1 border-0" title="Module Split"></iframe>
+
+        <!-- CAD Toolbar: Layers, Zoom, Export -->
+        <div class="px-4 py-2.5 bg-[#13161f] border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+          <!-- Layer Visibility Toggles -->
+          <div class="flex flex-wrap items-center gap-3 text-xs">
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" id="chk-layer-cut" checked onchange="renderCADSheets()" class="rounded text-red-600 focus:ring-0">
+              <span class="inline-block w-3 h-0.5 bg-[#ff0000]"></span>
+              <span class="font-medium text-slate-200">Découpe <code class="text-[10px] text-red-400">#FF0000</code></span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" id="chk-layer-score" checked onchange="renderCADSheets()" class="rounded text-blue-600 focus:ring-0">
+              <span class="inline-block w-3 h-0.5 bg-[#0000ff]"></span>
+              <span class="font-medium text-slate-200">Marquage/Gravure <code class="text-[10px] text-blue-400">#0000FF</code></span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" id="chk-layer-labels" checked onchange="renderCADSheets()" class="rounded text-emerald-600 focus:ring-0">
+              <span class="font-medium text-slate-400">Noms des pièces (aperçu)</span>
+            </label>
+          </div>
+
+          <!-- Zoom Controls & Single Sheet Export -->
+          <div class="flex items-center gap-2">
+            <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg overflow-hidden text-xs">
+              <button onclick="zoomCAD(-0.2)" class="px-2.5 py-1 text-slate-300 hover:bg-slate-800 font-bold" title="Dézoomer">−</button>
+              <button onclick="resetCADZoom()" id="zoom-level-label" class="px-2.5 py-1 font-mono text-[11px] text-slate-300 hover:bg-slate-800">100%</button>
+              <button onclick="zoomCAD(0.2)" class="px-2.5 py-1 text-slate-300 hover:bg-slate-800 font-bold" title="Zoomer">+</button>
+            </div>
+
+            <button onclick="downloadCurrentSheet()" id="btn-dl-current" class="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span id="btn-dl-current-text">Exporter Planche 1 (.SVG)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Interactive CAD Viewport -->
+        <div id="cad-viewport" class="relative flex-1 min-h-[540px] cad-grid overflow-auto p-4 flex items-center justify-center select-none">
+          <div id="cad-canvas-wrapper" class="w-full transition-transform duration-150 origin-top-left">
+            <!-- Populated dynamically with the 3 SVG sheets -->
+          </div>
+        </div>
+
+        <!-- Sheet Technical Summary Footer -->
+        <div class="p-3.5 bg-[#13161f] border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+          <div id="sheet-parts-summary" class="font-medium text-slate-300">
+            Planche 1 : Face avant ajourée, Dos, 2 Flancs à 24 fentes, Couronne haute (Format 485 × 310 mm)
+          </div>
+          <div class="flex items-center gap-4 font-mono text-[11px]">
+            <span>Unité SVG : <strong class="text-emerald-400">millimètres (mm)</strong></span>
+            <span>Plateau S1 max : <strong class="text-slate-200">498 × 319 mm</strong></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM SECTION: ASSEMBLY GUIDE & XTOOL S1 40W LASER SETTINGS -->
+    <section class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Card 1: xTool S1 40W Recommended Settings -->
+      <div class="bg-[#161922] border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Réglages Laser xTool S1 40W (XCS)
+          </h3>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-amber-400">Air Assist : AUTO / ON</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400">
+                <th class="py-2">Calque & Opération</th>
+                <th class="py-2">Contreplaqué 3mm</th>
+                <th class="py-2">Peuplier / MDF 4mm</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/70 font-mono text-[11px]">
+              <tr>
+                <td class="py-2.5 font-sans">
+                  <span class="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 mr-1.5 align-middle"></span>
+                  <strong class="text-blue-400">Bleu (#0000FF)</strong><br>
+                  <span class="text-slate-400 text-[10px]">Mode : Marquer (Score)</span>
+                </td>
+                <td class="py-2.5 text-slate-200">
+                  Puissance : <strong>35 %</strong><br>
+                  Vitesse : <strong>160 mm/s</strong><br>
+                  Passes : <strong>1</strong>
+                </td>
+                <td class="py-2.5 text-slate-200">
+                  Puissance : <strong>40 %</strong><br>
+                  Vitesse : <strong>150 mm/s</strong><br>
+                  Passes : <strong>1</strong>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-2.5 font-sans">
+                  <span class="inline-block w-2.5 h-2.5 rounded-full bg-red-500 mr-1.5 align-middle"></span>
+                  <strong class="text-red-400">Rouge (#FF0000)</strong><br>
+                  <span class="text-slate-400 text-[10px]">Mode : Découper (Cut)</span>
+                </td>
+                <td class="py-2.5 text-emerald-300">
+                  Puissance : <strong>85 %</strong><br>
+                  Vitesse : <strong>14 mm/s</strong><br>
+                  Passes : <strong>1</strong>
+                </td>
+                <td class="py-2.5 text-emerald-300">
+                  Puissance : <strong>92 %</strong><br>
+                  Vitesse : <strong>10 mm/s</strong><br>
+                  Passes : <strong>1</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-[11px] text-slate-400 leading-relaxed">
+          💡 <strong>Astuce XCS :</strong> Dans <em>xTool Creative Space</em>, définissez toujours le calque <strong class="text-blue-400">Bleu (Marquage)</strong> en premier dans l'ordre de traitement afin de graver les briques et les chiffres 1 à 24 avant que les pièces ne soient détachées.
+        </p>
+      </div>
+
+      <!-- Card 2: Nomenclature & Liste des Pièces -->
+      <div class="bg-[#161922] border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          Nomenclature Complète (Adaptée aux Plateaux 11 × 6 cm)
+        </h3>
+        <ul class="space-y-2 text-xs text-slate-300">
+          <li class="flex justify-between py-1 border-b border-slate-800/60">
+            <span>24× Plateaux journaliers (1 à 24) + médaillon Ø22mm</span>
+            <span id="bom-slats-dim" class="font-mono font-bold text-emerald-400">110 × 60 mm (11×6 cm)</span>
+          </li>
+          <li class="flex justify-between py-1 border-b border-slate-800/60">
+            <span>1× Face avant + 1× Dos du conduit (Planche 1)</span>
+            <span id="bom-tower-front" class="font-mono text-amber-400">390 × 110 mm</span>
+          </li>
+          <li class="flex justify-between py-1 border-b border-slate-800/60">
+            <span>2× Flancs du conduit à 24 fentes de 6 cm (Planche 2)</span>
+            <span id="bom-tower-sides" class="font-mono text-amber-400">390 × 86 mm</span>
+          </li>
+          <li class="flex justify-between py-1 border-b border-slate-800/60">
+            <span>1× Foyer bas complet : Arche, Dos, 2 Flancs (Planche 3)</span>
+            <span id="bom-base-box" class="font-mono text-sky-400">164 × 170 × 102 mm</span>
+          </li>
+          <li class="flex justify-between py-1 border-b border-slate-800/60">
+            <span>1× Tablette supérieure à trappe + 1× Socle arrondi</span>
+            <span id="bom-mantel-socle" class="font-mono text-sky-400">Planche 3</span>
+          </li>
+          <li class="flex justify-between py-1 border-b border-slate-800/60">
+            <span>1× Père Noël (65 mm) + Socle glissière sur plateau 11×6 cm</span>
+            <span class="font-mono text-emerald-400">Planche 2</span>
+          </li>
+          <li class="flex justify-between py-1">
+            <span>🎄 Pack Déco : Sapin 3D emboîtable, Feu de camp, Renne & Chaussettes</span>
+            <span class="font-mono text-rose-400">Planches 1 & 2</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 3: Guide d'assemblage étape par étape -->
+      <div class="bg-[#161922] border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+          Ordre de Montage & Fonctionnement Mécanique
+        </h3>
+        <ol class="space-y-2 text-xs text-slate-300 list-decimal list-inside leading-relaxed">
+          <li>
+            <strong>Assemblage du Foyer (Bas) :</strong> Emboîtez la face avant (arche en pierres), les deux flancs et le dos sur le socle inférieur à avancée arrondie. Fixez la tablette supérieure percée.
+          </li>
+          <li>
+            <strong>Assemblage du Conduit (Haut) :</strong> Emboîtez les 2 flancs à 24 fentes entre la face avant ajourée et le dos. Le bas du conduit s'encastre directement autour de la trappe centrale de la tablette.
+          </li>
+          <li>
+            <strong>Insertion des 24 Tirettes :</strong> Glissez les tirettes impaires (<strong class="text-amber-300">1, 3, 5... 23</strong>) par la <strong>droite</strong> et les tirettes paires (<strong class="text-amber-300">2, 4, 6... 24</strong>) par la <strong>gauche</strong>, de haut en bas.
+          </li>
+          <li>
+            <strong>Père Noël sur sa Glissière :</strong> Emboîtez le Père Noël dans son socle glissière et posez-le tout en haut sur la tirette n°1. Chaque jour, tirez la languette du jour pour le voir descendre d'un étage jusqu'à l'âtre le 24 décembre !
+          </li>
+        </ol>
       </div>
     </section>
-
   </main>
 
+  <!-- MODAL: XTOOL S1 40W & EXPORT NOTIFICATION -->
+  <div id="xcs-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#181c26] border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          Importation dans xTool Creative Space (XCS)
+        </h3>
+        <button onclick="closeXcsModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+      <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+        <p>
+          Les 3 fichiers <code>.SVG</code> générés intègrent des dimensions physiques strictes en <strong>millimètres (<code>width="485mm" height="310mm"</code>)</strong> pour correspondre directement au plateau de votre <strong>xTool S1 40W (498 × 319 mm)</strong>.
+        </p>
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 space-y-1.5 font-mono text-[11px]">
+          <div class="text-amber-400 font-bold">Vérification après import dans XCS :</div>
+          <div>• Dimensions totales d'une planche : <strong>485 × 310 mm</strong></div>
+          <div>• Calque <span class="text-blue-400">#0000FF</span> → Passer en mode <strong>Marquer (Score)</strong> : 35% | 160 mm/s</div>
+          <div>• Calque <span class="text-red-400">#FF0000</span> → Passer en mode <strong>Découper (Cut)</strong> : 85% | 14 mm/s</div>
+        </div>
+        <p class="text-slate-400">
+          Les étiquettes vertes d'identification des pièces affichées à l'écran sont automatiquement exclues lors de l'exportation <code>.SVG</code> afin que seules vos lignes de découpe et de gravure soient envoyées au laser.
+        </p>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeXcsModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white">Fermer</button>
+        <button onclick="closeXcsModal(); downloadAllSVGs();" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white">Télécharger les 3 SVG maintenant</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-msg" class="fixed bottom-5 right-5 z-50 bg-emerald-600 text-white px-4 py-2.5 rounded-xl shadow-2xl border border-emerald-400/40 text-xs font-semibold hidden items-center gap-2 transition-all">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    <span id="toast-text">Fichier SVG téléchargé avec succès !</span>
+  </div>
+
+  <!-- APPLICATION LOGIC -->
   <script>
-    const urls = {
-      cloud: {
-        app1: 'https://event--calend.pages.dev/',
-        app2: 'https://module-empilable.pages.dev/'
-      },
-      local: {
-        app1: 'index.html',
-        app2: 'Modeule_empilable.html'
-      }
+    // =========================================================================
+    // STATE & PARAMETERS
+    // =========================================================================
+    const state = {
+      slatL: 110,          // Longueur du rectangle de chaque plateau (110 mm = 11 cm)
+      slatW: 60,           // Largeur/profondeur de chaque plateau (60 mm = 6 cm)
+      woodT: 3.0,          // Épaisseur du bois en mm
+      structH: 560,        // Hauteur totale de la structure (mm)
+      clearance: 0.40,     // Jeu pour les fentes (mm)
+      kerf: 0.15,          // Compensation trait laser (mm)
+      removedSlats: new Set(), // Tirettes retirées (1..24)
+      simPerspective: true,
+      simShowDims: true,
+      currentSheet: 4,     // Planche active (1..5 ou 0 pour vue globale)
+      cadZoom: 1.0,
+      autoPlayTimer: null,
+      layoutMode: 'split',
+      decoFacade: true,    // Gravures Noël sur la cheminée
+      decoSlats: true,     // Gravures Noël sur les 24 plateaux
+      deco3D: true,        // Découpes d'accessoires 3D (Sapin 3D, Feu, Renne, Chaussettes)
+      mantelText: 'JOYEUX NOËL'
     };
 
-    function updateIframeSources() {
-      const mode = document.getElementById('source-mode').value;
-      const target = urls[mode] || urls.cloud;
-
-      document.getElementById('iframe-app1').src = target.app1;
-      document.getElementById('iframe-app2').src = target.app2;
-      document.getElementById('iframe-split1').src = target.app1;
-      document.getElementById('iframe-split2').src = target.app2;
+    function onDecoChange() {
+      state.decoFacade = document.getElementById('chk-deco-facade')?.checked !== false;
+      state.decoSlats = document.getElementById('chk-deco-slats')?.checked !== false;
+      state.deco3D = document.getElementById('chk-deco-3d')?.checked !== false;
+      const txtInput = document.getElementById('param-mantel-text');
+      state.mantelText = txtInput ? txtInput.value.toUpperCase() : 'JOYEUX NOËL';
+      renderSimulator();
+      renderCADSheets();
     }
 
-    function switchTab(tab) {
-      const views = ['home', 'app1', 'app2', 'split'];
-      views.forEach(v => {
-        const section = document.getElementById(`view-${v}`);
-        const btn = document.getElementById(`nav-${v}`);
-        if (!section || !btn) return;
+    // =========================================================================
+    // CHRISTMAS VECTOR MOTIFS GENERATOR (FOR LASER SCORE #0000FF & CUT #FF0000)
+    // =========================================================================
+    function starVectorPath(cx, cy, rOut, rIn) {
+      let pts = [];
+      for (let i = 0; i < 10; i++) {
+        const ang = -Math.PI / 2 + (i * Math.PI) / 5;
+        const r = i % 2 === 0 ? rOut : rIn;
+        pts.push(`${(cx + r * Math.cos(ang)).toFixed(2)} ${(cy + r * Math.sin(ang)).toFixed(2)}`);
+      }
+      return `M ${pts.join(' L ')} Z`;
+    }
 
-        if (v === tab) {
-          section.classList.remove('hidden');
-          if (v === 'split') {
-            section.classList.add('grid');
-          } else if (v !== 'home') {
-            section.classList.add('flex');
-          }
-          btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-500 text-slate-950 shadow flex items-center gap-1.5";
-        } else {
-          section.classList.add('hidden');
-          section.classList.remove('flex', 'grid');
-          btn.className = (v === 'split' ? "hidden lg:flex " : "flex ") + "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-300 hover:text-white items-center gap-1.5";
+    function snowflakeVectorPath(cx, cy, r) {
+      let d = '';
+      for (let i = 0; i < 6; i++) {
+        const ang = (i * Math.PI) / 3;
+        const x2 = cx + r * Math.cos(ang);
+        const y2 = cy + r * Math.sin(ang);
+        d += `M ${cx.toFixed(2)} ${cy.toFixed(2)} L ${x2.toFixed(2)} ${y2.toFixed(2)} `;
+        // Petits chevrons sur chaque branche
+        const xm = cx + r * 0.58 * Math.cos(ang);
+        const ym = cy + r * 0.58 * Math.sin(ang);
+        const bLen = r * 0.32;
+        const a1 = ang + Math.PI / 4;
+        const a2 = ang - Math.PI / 4;
+        d += `M ${(xm + bLen * Math.cos(a1)).toFixed(2)} ${(ym + bLen * Math.sin(a1)).toFixed(2)} L ${xm.toFixed(2)} ${ym.toFixed(2)} L ${(xm + bLen * Math.cos(a2)).toFixed(2)} ${(ym + bLen * Math.sin(a2)).toFixed(2)} `;
+      }
+      return d.trim();
+    }
+
+    function miniPineVectorPath(cx, cy, s) {
+      return [
+        `M ${cx.toFixed(2)} ${(cy - s).toFixed(2)}`,
+        `L ${(cx + s * 0.55).toFixed(2)} ${(cy - s * 0.25).toFixed(2)}`,
+        `H ${(cx + s * 0.25).toFixed(2)}`,
+        `L ${(cx + s * 0.75).toFixed(2)} ${(cy + s * 0.4).toFixed(2)}`,
+        `H ${(cx + s * 0.35).toFixed(2)}`,
+        `L ${(cx + s * 0.9).toFixed(2)} ${(cy + s * 0.95).toFixed(2)}`,
+        `H ${(cx + s * 0.2).toFixed(2)}`,
+        `V ${(cy + s * 1.25).toFixed(2)}`,
+        `H ${(cx - s * 0.2).toFixed(2)}`,
+        `V ${(cy + s * 0.95).toFixed(2)}`,
+        `H ${(cx - s * 0.9).toFixed(2)}`,
+        `L ${(cx - s * 0.35).toFixed(2)} ${(cy + s * 0.4).toFixed(2)}`,
+        `H ${(cx - s * 0.75).toFixed(2)}`,
+        `L ${(cx - s * 0.25).toFixed(2)} ${(cy - s * 0.25).toFixed(2)}`,
+        `H ${(cx - s * 0.55).toFixed(2)}`,
+        `Z`
+      ].join(' ');
+    }
+
+    function giftVectorPath(cx, cy, s) {
+      const w = s * 1.5, h = s * 1.3;
+      const x = cx - w / 2, y = cy - h / 2 + 2;
+      return [
+        rectPath(x, y, w, h, 1),
+        `M ${cx.toFixed(2)} ${y.toFixed(2)} V ${(y + h).toFixed(2)}`,
+        `M ${x.toFixed(2)} ${(y + h / 2).toFixed(2)} H ${(x + w).toFixed(2)}`,
+        `M ${cx.toFixed(2)} ${y.toFixed(2)} C ${(cx - s * 0.6).toFixed(2)} ${(y - s * 0.55).toFixed(2)}, ${(cx - s * 0.8).toFixed(2)} ${y.toFixed(2)}, ${cx.toFixed(2)} ${y.toFixed(2)}`,
+        `M ${cx.toFixed(2)} ${y.toFixed(2)} C ${(cx + s * 0.6).toFixed(2)} ${(y - s * 0.55).toFixed(2)}, ${(cx + s * 0.8).toFixed(2)} ${y.toFixed(2)}, ${cx.toFixed(2)} ${y.toFixed(2)}`
+      ].join(' ');
+    }
+
+    function bellVectorPath(cx, cy, s) {
+      return [
+        `M ${(cx - s * 0.75).toFixed(2)} ${(cy + s * 0.7).toFixed(2)}`,
+        `Q ${(cx - s * 0.55).toFixed(2)} ${(cy - s * 0.8).toFixed(2)} ${cx.toFixed(2)} ${(cy - s * 0.8).toFixed(2)}`,
+        `Q ${(cx + s * 0.55).toFixed(2)} ${(cy - s * 0.8).toFixed(2)} ${(cx + s * 0.75).toFixed(2)} ${(cy + s * 0.7).toFixed(2)}`,
+        `Z`,
+        `M ${(cx - s * 0.2).toFixed(2)} ${(cy + s * 0.7).toFixed(2)} A ${(s * 0.2).toFixed(2)} ${(s * 0.2).toFixed(2)} 0 1 0 ${(cx + s * 0.2).toFixed(2)} ${(cy + s * 0.7).toFixed(2)}`
+      ].join(' ');
+    }
+
+    // Stocking Cutout Path (Chaussette de Noël à suspendre ou coller en relief)
+    function stockingCutPath(x, y, scale = 1) {
+      const s = scale;
+      return [
+        `M ${(x + 4 * s).toFixed(2)} ${y.toFixed(2)}`,
+        `H ${(x + 18 * s).toFixed(2)}`,
+        `V ${(y + 18 * s).toFixed(2)}`,
+        `C ${(x + 25 * s).toFixed(2)} ${(y + 20 * s).toFixed(2)}, ${(x + 27 * s).toFixed(2)} ${(y + 28 * s).toFixed(2)}, ${(x + 18 * s).toFixed(2)} ${(y + 30 * s).toFixed(2)}`,
+        `H ${(x + 6 * s).toFixed(2)}`,
+        `C ${(x + 2 * s).toFixed(2)} ${(y + 30 * s).toFixed(2)}, ${x.toFixed(2)} ${(y + 26 * s).toFixed(2)}, ${(x + 2 * s).toFixed(2)} ${(y + 20 * s).toFixed(2)}`,
+        `L ${(x + 4 * s).toFixed(2)} ${y.toFixed(2)} Z`
+      ].join(' ');
+    }
+
+    // 3D Slotted Christmas Tree (2 interlocking parts with central slot of width t)
+    function slottedTreePartPath(cx, bottomY, w, h, slotW, isTopSlot) {
+      const topY = bottomY - h;
+      const halfSlot = slotW / 2;
+      const midY = topY + h * 0.52;
+
+      if (isTopSlot) {
+        // Fente partant du haut jusqu'au milieu
+        return [
+          `M ${(cx - halfSlot).toFixed(2)} ${(topY + 4).toFixed(2)}`,
+          `V ${midY.toFixed(2)}`,
+          `H ${(cx + halfSlot).toFixed(2)}`,
+          `V ${(topY + 4).toFixed(2)}`,
+          `L ${(cx + w * 0.28).toFixed(2)} ${(topY + h * 0.34).toFixed(2)}`,
+          `H ${(cx + w * 0.14).toFixed(2)}`,
+          `L ${(cx + w * 0.38).toFixed(2)} ${(topY + h * 0.64).toFixed(2)}`,
+          `H ${(cx + w * 0.20).toFixed(2)}`,
+          `L ${(cx + w * 0.48).toFixed(2)} ${(bottomY - 8).toFixed(2)}`,
+          `H ${(cx + w * 0.14).toFixed(2)}`,
+          `V ${bottomY.toFixed(2)}`,
+          `H ${(cx - w * 0.14).toFixed(2)}`,
+          `V ${(bottomY - 8).toFixed(2)}`,
+          `H ${(cx - w * 0.48).toFixed(2)}`,
+          `L ${(cx - w * 0.20).toFixed(2)} ${(topY + h * 0.64).toFixed(2)}`,
+          `H ${(cx - w * 0.38).toFixed(2)}`,
+          `L ${(cx - w * 0.14).toFixed(2)} ${(topY + h * 0.34).toFixed(2)}`,
+          `H ${(cx - w * 0.28).toFixed(2)}`,
+          `Z`
+        ].join(' ');
+      } else {
+        // Fente partant du bas jusqu'au milieu
+        return [
+          `M ${cx.toFixed(2)} ${topY.toFixed(2)}`,
+          `L ${(cx + w * 0.28).toFixed(2)} ${(topY + h * 0.34).toFixed(2)}`,
+          `H ${(cx + w * 0.14).toFixed(2)}`,
+          `L ${(cx + w * 0.38).toFixed(2)} ${(topY + h * 0.64).toFixed(2)}`,
+          `H ${(cx + w * 0.20).toFixed(2)}`,
+          `L ${(cx + w * 0.48).toFixed(2)} ${(bottomY - 8).toFixed(2)}`,
+          `H ${(cx + w * 0.14).toFixed(2)}`,
+          `V ${bottomY.toFixed(2)}`,
+          `H ${(cx + halfSlot).toFixed(2)}`,
+          `V ${midY.toFixed(2)}`,
+          `H ${(cx - halfSlot).toFixed(2)}`,
+          `V ${bottomY.toFixed(2)}`,
+          `H ${(cx - w * 0.14).toFixed(2)}`,
+          `V ${(bottomY - 8).toFixed(2)}`,
+          `H ${(cx - w * 0.48).toFixed(2)}`,
+          `L ${(cx - w * 0.20).toFixed(2)} ${(topY + h * 0.64).toFixed(2)}`,
+          `H ${(cx - w * 0.38).toFixed(2)}`,
+          `L ${(cx - w * 0.14).toFixed(2)} ${(topY + h * 0.34).toFixed(2)}`,
+          `H ${(cx - w * 0.28).toFixed(2)}`,
+          `Z`
+        ].join(' ');
+      }
+    }
+
+    // =========================================================================
+    // GEOMETRY COMPUTATION (1:1 MM)
+    // =========================================================================
+    function getDerivedDimensions() {
+      const t = state.woodT;
+      const slatL = state.slatL; // 110 mm
+      const slatW = state.slatW; // 60 mm
+      const play = state.clearance;
+
+      const baseH = 170;
+      const towerH = Math.max(380, state.structH - baseH);
+      const towerW = slatL; // La largeur du conduit correspond à la longueur utile du plateau (110 mm)
+      const slotLen = +(slatW + play).toFixed(2); // 60.4 mm
+      const slotH = +(t + play).toFixed(2);       // 3.4 mm
+      const towerD = Math.round(slatW + 2 * t + 20); // 86 mm en bois 3mm
+
+      const baseW = towerW + 54; // 164 mm
+      const baseD = towerD + 16; // 102 mm
+      const santaH = 65;
+
+      return {
+        t, slatL, slatW, play,
+        baseH, towerH, towerW, towerD,
+        slotLen, slotH,
+        baseW, baseD, santaH,
+        totalWithSanta: state.structH + santaH
+      };
+    }
+
+    // =========================================================================
+    // UI CONTROLS & LAYOUT SWITCHING
+    // =========================================================================
+    function setLayoutMode(mode) {
+      state.layoutMode = mode;
+      const simPanel = document.getElementById('panel-simulator');
+      const cadPanel = document.getElementById('panel-cad');
+      const btnSplit = document.getElementById('btn-mode-split');
+      const btnSim = document.getElementById('btn-mode-sim');
+      const btnCad = document.getElementById('btn-mode-cad');
+
+      const activeClass = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-500 text-slate-950 shadow";
+      const idleClass = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-300 hover:text-white";
+
+      btnSplit.className = mode === 'split' ? activeClass : idleClass;
+      btnSim.className = mode === 'sim' ? activeClass : idleClass;
+      btnCad.className = mode === 'cad' ? activeClass : idleClass;
+
+      if (mode === 'split') {
+        simPanel.className = "xl:col-span-5 bg-[#161922] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col";
+        cadPanel.className = "xl:col-span-7 bg-[#161922] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col";
+      } else if (mode === 'sim') {
+        simPanel.className = "xl:col-span-12 bg-[#161922] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col";
+        cadPanel.className = "hidden";
+      } else if (mode === 'cad') {
+        simPanel.className = "hidden";
+        cadPanel.className = "xl:col-span-12 bg-[#161922] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col";
+      }
+    }
+
+    function adjustParam(inputId, delta) {
+      const el = document.getElementById(inputId);
+      if (!el) return;
+      const min = parseFloat(el.min);
+      const max = parseFloat(el.max);
+      let val = parseFloat(el.value) + delta;
+      if (!isNaN(min)) val = Math.max(min, val);
+      if (!isNaN(max)) val = Math.min(max, val);
+      el.value = Number.isInteger(delta) ? Math.round(val) : val.toFixed(2).replace(/\.00$/, '.0');
+      onParamChange();
+    }
+
+    function setWoodPreset(thickness) {
+      const el = document.getElementById('param-wood');
+      if (el) {
+        el.value = thickness.toFixed(1);
+        onParamChange();
+      }
+    }
+
+    function onParamChange() {
+      state.slatL = Math.max(80, Math.min(135, parseFloat(document.getElementById('param-slat-l').value) || 110));
+      state.slatW = Math.max(35, Math.min(75, parseFloat(document.getElementById('param-slat-w').value) || 60));
+      state.woodT = Math.max(2.0, Math.min(6.0, parseFloat(document.getElementById('param-wood').value) || 3.0));
+      state.structH = Math.max(550, Math.min(620, parseFloat(document.getElementById('param-height').value) || 560));
+      state.clearance = Math.max(0.1, Math.min(1.0, parseFloat(document.getElementById('param-clearance').value) || 0.4));
+      state.kerf = Math.max(0.0, Math.min(0.35, parseFloat(document.getElementById('param-kerf').value) || 0.15));
+
+      const d = getDerivedDimensions();
+
+      // Update top badges & BOM
+      document.getElementById('badge-slat-dim').textContent = `${(d.slatL / 10).toFixed(1)} × ${(d.slatW / 10).toFixed(1)} cm`;
+      document.getElementById('badge-struct-h').textContent = `${(state.structH / 10).toFixed(1)} cm`;
+      document.getElementById('badge-total-h').textContent = `${(d.totalWithSanta / 10).toFixed(1)} cm`;
+      document.getElementById('badge-wood-t').textContent = `${d.t.toFixed(1)} mm`;
+      document.getElementById('cad-slot-info').textContent = `Fentes flancs : ${d.slotLen} × ${d.slotH} mm`;
+
+      document.getElementById('bom-slats-dim').textContent = `${d.slatL} × ${d.slatW} mm (${(d.slatL/10).toFixed(0)}×${(d.slatW/10).toFixed(0)} cm)`;
+      document.getElementById('bom-tower-front').textContent = `${d.towerH} × ${d.towerW} mm`;
+      document.getElementById('bom-tower-sides').textContent = `${d.towerH} × ${d.towerD} mm`;
+      document.getElementById('bom-base-box').textContent = `${d.baseW} × ${d.baseH} × ${d.baseD} mm`;
+
+      renderSimulator();
+      renderCADSheets();
+    }
+
+    // =========================================================================
+    // ADVENT SIMULATOR LOGIC & INTERACTIVE 2.5D RENDERER
+    // =========================================================================
+    function toggleSimViewMode() {
+      state.simPerspective = !state.simPerspective;
+      const btn = document.getElementById('btn-sim-perspective');
+      btn.textContent = state.simPerspective ? 'Vue : 2.5D Perspective' : 'Vue : 2D Face';
+      renderSimulator();
+    }
+
+    function toggleSimDimensions() {
+      state.simShowDims = !state.simShowDims;
+      const btn = document.getElementById('btn-sim-dims');
+      btn.textContent = state.simShowDims ? 'Cotes : ON' : 'Cotes : OFF';
+      renderSimulator();
+    }
+
+    function toggleSlat(dayNum) {
+      if (state.removedSlats.has(dayNum)) {
+        state.removedSlats.delete(dayNum);
+      } else {
+        state.removedSlats.add(dayNum);
+      }
+      updateAdventStatusUI();
+      renderSimulator();
+    }
+
+    function onSliderDayChange(val) {
+      const dayCount = parseInt(val, 10) || 0;
+      state.removedSlats.clear();
+      for (let i = 1; i <= dayCount; i++) {
+        state.removedSlats.add(i);
+      }
+      document.getElementById('advent-slider').value = dayCount;
+      updateAdventStatusUI();
+      renderSimulator();
+    }
+
+    function pullNextSlat() {
+      for (let i = 1; i <= 24; i++) {
+        if (!state.removedSlats.has(i)) {
+          state.removedSlats.add(i);
+          break;
         }
-      });
+      }
+      document.getElementById('advent-slider').value = state.removedSlats.size;
+      updateAdventStatusUI();
+      renderSimulator();
     }
+
+    function resetSlats() {
+      if (state.autoPlayTimer) toggleAutoPlay();
+      state.removedSlats.clear();
+      document.getElementById('advent-slider').value = 0;
+      updateAdventStatusUI();
+      renderSimulator();
+    }
+
+    function toggleAutoPlay() {
+      const btn = document.getElementById('btn-autoplay');
+      if (state.autoPlayTimer) {
+        clearInterval(state.autoPlayTimer);
+        state.autoPlayTimer = null;
+        btn.textContent = '▶ Animer';
+        btn.classList.remove('bg-amber-500', 'text-slate-950');
+      } else {
+        if (state.removedSlats.size >= 24) state.removedSlats.clear();
+        btn.textContent = '⏸ Pause';
+        btn.classList.add('bg-amber-500', 'text-slate-950');
+        state.autoPlayTimer = setInterval(() => {
+          if (state.removedSlats.size >= 24) {
+            toggleAutoPlay();
+          } else {
+            pullNextSlat();
+          }
+        }, 420);
+      }
+    }
+
+    function updateAdventStatusUI() {
+      const count = state.removedSlats.size;
+      let firstPresent = null;
+      for (let i = 1; i <= 24; i++) {
+        if (!state.removedSlats.has(i)) {
+          firstPresent = i;
+          break;
+        }
+      }
+      const badge = document.getElementById('sim-day-badge');
+      const statusText = document.getElementById('santa-status-text');
+
+      if (count === 0) {
+        badge.textContent = `1er Décembre (0/24 retirées)`;
+      } else if (count === 24) {
+        badge.textContent = `24 Décembre — Joyeux Noël ! (24/24)`;
+      } else {
+        badge.textContent = `${count} Décembre (${count}/24 retirées)`;
+      }
+
+      if (firstPresent !== null) {
+        statusText.textContent = `Père Noël posé sur le plateau n°${firstPresent}`;
+      } else {
+        statusText.textContent = `Père Noël arrivé dans l'âtre de la cheminée !`;
+      }
+    }
+
+    function renderSimulator() {
+      const d = getDerivedDimensions();
+      const container = document.getElementById('simulator-svg-container');
+      if (!container) return;
+
+      const cx = 230;
+      const topY = 95;
+      const towerH = d.towerH;
+      const towerW = d.towerW;
+      const baseH = d.baseH;
+      const baseW = d.baseW;
+      const baseTopY = topY + towerH;
+      const bottomY = baseTopY + baseH;
+
+      const perspX = state.simPerspective ? 24 : 0;
+      const perspY = state.simPerspective ? -14 : 0;
+
+      // Determine Santa resting Y coordinate
+      let firstBlockingIndex = -1;
+      for (let i = 1; i <= 24; i++) {
+        if (!state.removedSlats.has(i)) {
+          firstBlockingIndex = i - 1;
+          break;
+        }
+      }
+
+      const firstSlotY = topY + 34;
+      const slotPitch = (towerH - 54) / 23;
+      const hearthFloorY = bottomY - 12;
+
+      let santaRestY = hearthFloorY;
+      if (firstBlockingIndex >= 0) {
+        santaRestY = firstSlotY + firstBlockingIndex * slotPitch - 2;
+      }
+
+      // Build Slats SVG
+      let slatsSVG = '';
+      for (let i = 0; i < 24; i++) {
+        const dayNum = i + 1;
+        const isEven = dayNum % 2 === 0;
+        const isRemoved = state.removedSlats.has(dayNum);
+        const sy = firstSlotY + i * slotPitch;
+        const tabRadius = 9.5;
+        const tabCx = isEven ? (cx - towerW / 2 - 15) : (cx + towerW / 2 + 15);
+        const shiftX = isRemoved ? (isEven ? -48 : 48) : 0;
+        const opacity = isRemoved ? 0.22 : 1.0;
+
+        slatsSVG += `
+          <g class="slat-interactive" onclick="toggleSlat(${dayNum})" style="opacity:${opacity}; transform: translateX(${shiftX}px)">
+            <title>Plateau Jour ${dayNum} (${d.slatL}×${d.slatW} mm) — Cliquer pour ${isRemoved ? 'remettre' : 'tirer'}</title>
+            <!-- Slat Horizontal Bar inside & outside tower -->
+            <rect x="${isEven ? tabCx : cx - towerW / 2 + 4}" y="${sy - 2.2}" width="${towerW + 11}" height="4.4" rx="1.2" fill="${isEven ? '#e7cba9' : '#deb88d'}" stroke="#6e4726" stroke-width="0.9"/>
+            <!-- Circular Numbered Medallion -->
+            <circle cx="${tabCx}" cy="${sy}" r="${tabRadius}" fill="#f5e1c8" stroke="#7c4a21" stroke-width="1.2"/>
+            <circle cx="${tabCx}" cy="${sy}" r="${tabRadius - 2.2}" fill="none" stroke="#b45309" stroke-width="0.6" stroke-dasharray="2,1"/>
+            <text x="${tabCx}" y="${sy + 3.2}" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" font-weight="800" fill="#5c2d0c">${dayNum}</text>
+          </g>
+        `;
+      }
+
+      // Bricks along the chimney tower pillars
+      let towerBricksSVG = '';
+      const numBricks = 9;
+      for (let b = 0; b < numBricks; b++) {
+        const by = topY + 26 + b * ((towerH - 42) / numBricks);
+        // Finger joints (darker wood tabs)
+        towerBricksSVG += `<rect x="${cx - towerW / 2}" y="${by}" width="4" height="12" fill="#6b3e20"/>`;
+        towerBricksSVG += `<rect x="${cx + towerW / 2 - 4}" y="${by}" width="4" height="12" fill="#6b3e20"/>`;
+        // Engraved bricks
+        if (b < numBricks - 1) {
+          towerBricksSVG += `<rect x="${cx - towerW / 2 + 6}" y="${by + 15}" width="11" height="15" rx="2" fill="none" stroke="#9a6b43" stroke-width="1"/>`;
+          towerBricksSVG += `<rect x="${cx + towerW / 2 - 17}" y="${by + 15}" width="11" height="15" rx="2" fill="none" stroke="#9a6b43" stroke-width="1"/>`;
+        }
+      }
+
+      // Base Fireplace Stones
+      let baseBricksSVG = '';
+      for (let r = 0; r < 5; r++) {
+        const by = baseTopY + 18 + r * 28;
+        const wLeft = (r % 2 === 0) ? 28 : 20;
+        baseBricksSVG += `<rect x="${cx - baseW / 2 + 10}" y="${by}" width="${wLeft}" height="16" rx="2.5" fill="#ead3b8" stroke="#8c5a32" stroke-width="1"/>`;
+        baseBricksSVG += `<rect x="${cx + baseW / 2 - 10 - wLeft}" y="${by}" width="${wLeft}" height="16" rx="2.5" fill="#ead3b8" stroke="#8c5a32" stroke-width="1"/>`;
+      }
+
+      // Dimension overlays
+      let dimsSVG = '';
+      if (state.simShowDims) {
+        dimsSVG = `
+          <g stroke="#38bdf8" stroke-width="1.2" fill="#38bdf8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">
+            <!-- Structure Height -->
+            <line x1="48" y1="${topY}" x2="48" y2="${bottomY}" />
+            <line x1="42" y1="${topY}" x2="56" y2="${topY}" />
+            <line x1="42" y1="${bottomY}" x2="56" y2="${bottomY}" />
+            <rect x="10" y="${(topY + bottomY) / 2 - 12}" width="72" height="22" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+            <text x="46" y="${(topY + bottomY) / 2 + 3}" text-anchor="middle" stroke="none">${(state.structH / 10).toFixed(1)} cm</text>
+
+            <!-- Slat Width Callout -->
+            <rect x="${cx + towerW / 2 + 34}" y="${topY + 8}" width="118" height="36" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="1"/>
+            <text x="${cx + towerW / 2 + 93}" y="${topY + 23}" text-anchor="middle" fill="#fbbf24" stroke="none" font-size="10">Plateau Jour :</text>
+            <text x="${cx + towerW / 2 + 93}" y="${topY + 37}" text-anchor="middle" fill="#ffffff" stroke="none" font-size="10.5">${(d.slatL/10).toFixed(1)} × ${(d.slatW/10).toFixed(1)} cm</text>
+          </g>
+        `;
+      }
+
+      const archW = 78;
+      const archH = 104;
+      const archTopStraight = bottomY - (archH - archW / 2);
+
+      // Christmas Facade Engravings (Snowflakes, Holly, Mantel Text, Backboard Stars)
+      let christmasFacadeSVG = '';
+      if (state.decoFacade) {
+        christmasFacadeSVG = `
+          <!-- Backboard Stars & Snowflakes inside chimney shaft -->
+          <g stroke="#d97706" stroke-width="0.9" fill="none" opacity="0.55">
+            <path d="${snowflakeVectorPath(cx - 18, topY + 65, 7)}"/>
+            <path d="${snowflakeVectorPath(cx + 18, topY + 115, 6)}"/>
+            <path d="${starVectorPath(cx, topY + 165, 6, 2.5)}"/>
+            <path d="${snowflakeVectorPath(cx - 16, topY + 220, 7)}"/>
+            <path d="${starVectorPath(cx + 16, topY + 275, 5.5, 2.2)}"/>
+            <path d="${snowflakeVectorPath(cx, topY + 330, 6.5)}"/>
+          </g>
+          <!-- Crown & Pillars Festive Engravings -->
+          <g stroke="#7c2d12" stroke-width="1.1" fill="#f59e0b" fill-opacity="0.25">
+            <path d="${starVectorPath(cx, topY + 11, 7, 3)}"/>
+            <path d="${snowflakeVectorPath(cx - 28, topY + 11, 5.5)}"/>
+            <path d="${snowflakeVectorPath(cx + 28, topY + 11, 5.5)}"/>
+          </g>
+          <!-- Engraved Mantel Text & Holly Garland above Arch -->
+          <g>
+            <rect x="${cx - 56}" y="${baseTopY + 8}" width="112" height="17" rx="3" fill="#f3dec3" stroke="#7c4a21" stroke-width="1"/>
+            <text x="${cx}" y="${baseTopY + 20}" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" font-weight="800" letter-spacing="1" fill="#7c2d12">${state.mantelText || 'JOYEUX NOËL'}</text>
+            <path d="${starVectorPath(cx - 48, baseTopY + 16.5, 4.5, 2)}" fill="#b45309" stroke="#7c2d12" stroke-width="0.6"/>
+            <path d="${starVectorPath(cx + 48, baseTopY + 16.5, 4.5, 2)}" fill="#b45309" stroke="#7c2d12" stroke-width="0.6"/>
+          </g>
+        `;
+      }
+
+      // 3D Cutout Accessories in Simulator (3D Tree, Hanging Stockings, Campfire in Hearth, Reindeer)
+      let christmas3DSVG = '';
+      if (state.deco3D) {
+        christmas3DSVG = `
+          <!-- Hanging Christmas Stockings on Mantelpiece -->
+          <g transform="translate(${cx - baseW / 2 + 12}, ${baseTopY + 2})" fill="#e7cba9" stroke="#6e4726" stroke-width="1.1">
+            <path d="${stockingCutPath(0, 0, 0.72)}"/>
+            <line x1="2" y1="4" x2="12" y2="4" stroke="#b91c1c" stroke-width="1.5"/>
+          </g>
+          <g transform="translate(${cx + baseW / 2 - 28}, ${baseTopY + 2})" fill="#e7cba9" stroke="#6e4726" stroke-width="1.1">
+            <path d="${stockingCutPath(0, 0, 0.72)}"/>
+            <line x1="2" y1="4" x2="12" y2="4" stroke="#b91c1c" stroke-width="1.5"/>
+          </g>
+
+          <!-- Crackling Campfire Logs & Flames in the Hearth -->
+          <g transform="translate(${cx}, ${bottomY - 4})">
+            <rect x="-22" y="-5" width="44" height="5" rx="2" fill="#78350f" stroke="#451a03" stroke-width="1"/>
+            <path d="M -14 -5 C -18 -18 -8 -28 -6 -36 C -2 -26 2 -20 0 -42 C 6 -28 12 -22 8 -14 C 14 -22 18 -14 14 -5 Z" fill="#f59e0b" fill-opacity="0.45" stroke="#b45309" stroke-width="1.2"/>
+          </g>
+
+          <!-- 3D Slotted Christmas Tree (Left of Fireplace) -->
+          <g transform="translate(${cx - baseW / 2 - 22}, ${bottomY + 4})">
+            <title>Sapin 3D emboîtable (2 pièces découpées sur la Planche 1)</title>
+            <ellipse cx="0" cy="0" rx="18" ry="5" fill="#c9a279" stroke="#6e4726" stroke-width="1"/>
+            <path d="${miniPineVectorPath(0, -34, 26)}" fill="#e5c7a3" stroke="#5c3418" stroke-width="1.3"/>
+            <line x1="0" y1="-60" x2="0" y2="0" stroke="#6e4726" stroke-width="2.2"/>
+            <path d="${starVectorPath(0, -63, 6, 2.5)}" fill="#fbbf24" stroke="#7c2d12" stroke-width="0.9"/>
+          </g>
+
+          <!-- Standing Reindeer Figurine (Right of Fireplace) -->
+          <g transform="translate(${cx + baseW / 2 + 24}, ${bottomY + 4})">
+            <title>Renne de Noël sur socle (découpé sur la Planche 2)</title>
+            <ellipse cx="0" cy="0" rx="16" ry="4.5" fill="#c9a279" stroke="#6e4726" stroke-width="1"/>
+            <path d="M -10 0 L -8 -18 L -12 -22 L -8 -26 L 4 -26 L 8 -38 L 4 -46 M 8 -38 L 13 -45 M 8 -38 L 14 -34 L 10 -24 L 10 0 L 6 0 L 5 -14 L -5 -14 L -6 0 Z" fill="#e5c7a3" stroke="#5c3418" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        `;
+      }
+
+      container.innerHTML = `
+        <svg viewBox="0 0 470 720" class="w-full h-full max-h-[640px]">
+          <defs>
+            <linearGradient id="woodFront" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f5e3ce"/>
+              <stop offset="100%" stop-color="#e2c4a1"/>
+            </linearGradient>
+            <linearGradient id="woodSide" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#c9a279"/>
+              <stop offset="100%" stop-color="#b0865c"/>
+            </linearGradient>
+            <linearGradient id="woodInside" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#855834"/>
+              <stop offset="100%" stop-color="#472b16"/>
+            </linearGradient>
+            <radialGradient id="hearthGlow" cx="50%" cy="65%" r="55%">
+              <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.65"/>
+              <stop offset="60%" stop-color="#ea580c" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- ROUNDED BASE SOCLE -->
+          <ellipse cx="${cx}" cy="${bottomY + 12}" rx="${baseW / 2 - 8}" ry="22" fill="#d9b68f" stroke="#6e4726" stroke-width="1.5"/>
+          <rect x="${cx - baseW / 2 - 12}" y="${bottomY - 4}" width="${baseW + 24}" height="10" rx="3" fill="#e6c8a5" stroke="#6e4726" stroke-width="1.4"/>
+
+          <!-- 2.5D SIDE EXTRUSION (TOWER & BASE) -->
+          ${state.simPerspective ? `
+            <!-- Tower Right Side -->
+            <polygon points="${cx + towerW / 2},${topY} ${cx + towerW / 2 + perspX},${topY + perspY} ${cx + towerW / 2 + perspX},${baseTopY + perspY} ${cx + towerW / 2},${baseTopY}" fill="url(#woodSide)" stroke="#6e4726" stroke-width="1.2"/>
+            <!-- Tower Top Roof -->
+            <polygon points="${cx - towerW / 2},${topY} ${cx - towerW / 2 + perspX},${topY + perspY} ${cx + towerW / 2 + perspX},${topY + perspY} ${cx + towerW / 2},${topY}" fill="#ebd1b3" stroke="#6e4726" stroke-width="1.2"/>
+            <!-- Base Right Side -->
+            <polygon points="${cx + baseW / 2},${baseTopY} ${cx + baseW / 2 + perspX},${baseTopY + perspY} ${cx + baseW / 2 + perspX},${bottomY + perspY} ${cx + baseW / 2},${bottomY}" fill="url(#woodSide)" stroke="#6e4726" stroke-width="1.2"/>
+          ` : ''}
+
+          <!-- CHIMNEY INSIDE SHAFT (DARK WOOD BACKING) -->
+          <rect x="${cx - towerW / 2 + 16}" y="${topY + 16}" width="${towerW - 32}" height="${towerH + baseH - 22}" fill="url(#woodInside)"/>
+
+          <!-- HEARTH GLOW WHEN SANTA REACHES BOTTOM -->
+          <ellipse cx="${cx}" cy="${bottomY - 26}" rx="42" ry="38" fill="url(#hearthGlow)" class="hearth-glow"/>
+
+          <!-- SANTA CLAUS FIGURINE ON SLIDING STAND -->
+          <g class="santa-transition" style="transform: translate(${cx}px, ${santaRestY}px)">
+            <!-- Santa Base Plate -->
+            <rect x="-22" y="-4" width="44" height="4" rx="1.5" fill="#b45309" stroke="#451a03" stroke-width="0.9"/>
+            <!-- Santa Silhouette & Engraved Details -->
+            <g transform="translate(0, -4)">
+              <path d="M -14 0 L -16 -24 C -22 -28 -20 -40 -10 -44 C -12 -54 -4 -62 4 -60 C 12 -58 14 -50 12 -44 C 22 -40 22 -26 14 -22 L 16 0 Z" fill="#f7e4cc" stroke="#5c2d0c" stroke-width="1.4"/>
+              <!-- Hat & Pompon -->
+              <path d="M -9 -46 Q 2 -64 15 -48" fill="none" stroke="#b91c1c" stroke-width="2"/>
+              <circle cx="16" cy="-48" r="3.5" fill="#fff7ed" stroke="#5c2d0c" stroke-width="1"/>
+              <!-- Beard & Face -->
+              <path d="M -9 -36 Q 0 -22 10 -36" fill="#ffffff" stroke="#7c4a21" stroke-width="1"/>
+              <circle cx="-3" cy="-41" r="1.3" fill="#3b1d0a"/>
+              <circle cx="4" cy="-41" r="1.3" fill="#3b1d0a"/>
+              <!-- Belt -->
+              <line x1="-13" y1="-16" x2="13" y2="-16" stroke="#7c2d12" stroke-width="2.5"/>
+              <rect x="-3.5" y="-19" width="7" height="6" fill="#fbbf24" stroke="#7c2d12" stroke-width="0.8"/>
+            </g>
+          </g>
+
+          <!-- 24 INTERACTIVE NUMBERED SLATS -->
+          ${slatsSVG}
+
+          <!-- TOWER FRONT FRAME (OPEN WINDOW) -->
+          <path fill="url(#woodFront)" stroke="#6e4726" stroke-width="1.5" fill-rule="evenodd"
+            d="M ${cx - towerW / 2} ${topY} H ${cx + towerW / 2} V ${baseTopY} H ${cx - towerW / 2} Z
+               M ${cx - towerW / 2 + 22} ${topY + 22} V ${baseTopY} H ${cx + towerW / 2 - 22} V ${topY + 22} Z" />
+
+          <!-- Top Crown Bricks -->
+          <rect x="${cx - 34}" y="${topY + 6}" width="18" height="10" rx="2" fill="none" stroke="#9a6b43" stroke-width="1"/>
+          <rect x="${cx - 9}" y="${topY + 6}" width="18" height="10" rx="2" fill="none" stroke="#9a6b43" stroke-width="1"/>
+          <rect x="${cx + 16}" y="${topY + 6}" width="18" height="10" rx="2" fill="none" stroke="#9a6b43" stroke-width="1"/>
+
+          ${towerBricksSVG}
+
+          <!-- MANTELPIECE (TABLETTE INTERMÉDIAIRE) -->
+          <rect x="${cx - baseW / 2 - 8}" y="${baseTopY - 4}" width="${baseW + 16}" height="8" rx="2" fill="#d9b38c" stroke="#5c3418" stroke-width="1.4"/>
+
+          <!-- FIREPLACE LOWER BOX FRONT WITH ARCH CUTOUT -->
+          <path fill="url(#woodFront)" stroke="#6e4726" stroke-width="1.6"
+            d="M ${cx - baseW / 2} ${baseTopY + 4} H ${cx + baseW / 2} V ${bottomY} H ${cx + archW / 2}
+               V ${archTopStraight} A ${archW / 2} ${archW / 2} 0 0 0 ${cx - archW / 2} ${archTopStraight}
+               V ${bottomY} H ${cx - baseW / 2} Z" />
+
+          <!-- Engraved Arch Voussoirs (Keystones) -->
+          <path d="M ${cx - archW / 2 - 12} ${archTopStraight} A ${archW / 2 + 12} ${archW / 2 + 12} 0 0 1 ${cx + archW / 2 + 12} ${archTopStraight}" fill="none" stroke="#8c5a32" stroke-width="1.1" stroke-dasharray="14,3"/>
+          <rect x="${cx - 9}" y="${archTopStraight - archW / 2 - 14}" width="18" height="14" rx="2" fill="#e6c8a5" stroke="#7c4a21" stroke-width="1.1"/>
+
+          ${baseBricksSVG}
+          ${christmasFacadeSVG}
+          ${christmas3DSVG}
+
+          <!-- DIMENSION LINES -->
+          ${dimsSVG}
+        </svg>
+      `;
+    }
+
+    // =========================================================================
+    // PARAMETRIC LASER CUTTING GENERATOR (5 SHEETS — 485 × 310 MM XTOOL S1)
+    // =========================================================================
+    function rectPath(x, y, w, h, r = 0) {
+      if (r <= 0) return `M ${x.toFixed(2)} ${y.toFixed(2)} h ${w.toFixed(2)} v ${h.toFixed(2)} h ${(-w).toFixed(2)} Z`;
+      return `M ${(x + r).toFixed(2)} ${y.toFixed(2)} h ${(w - 2 * r).toFixed(2)} a ${r} ${r} 0 0 1 ${r} ${r} v ${(h - 2 * r).toFixed(2)} a ${r} ${r} 0 0 1 ${-r} ${r} h ${(-(w - 2 * r)).toFixed(2)} a ${r} ${r} 0 0 1 ${-r} ${-r} v ${(-(h - 2 * r)).toFixed(2)} a ${r} ${r} 0 0 1 ${r} ${-r} Z`;
+    }
+
+    // Generates a single continuous outer cut path for a 110×60mm slat + its Ø22mm numbered medallion tab
+    function slatWithTabPath(x, y, L, W) {
+      const rTab = 11; // Ø 22 mm medallion
+      const neckHalf = 5.5;
+      const cy = y + W / 2;
+      const neckX = x + L;
+      const tabCenterX = neckX + rTab + 2;
+      const dy = neckHalf;
+      const dx = Math.sqrt(Math.max(1, rTab * rTab - dy * dy));
+      const joinX = (tabCenterX - dx).toFixed(2);
+      const topJoinY = (cy - dy).toFixed(2);
+      const botJoinY = (cy + dy).toFixed(2);
+
+      return [
+        `M ${x.toFixed(2)} ${y.toFixed(2)}`,
+        `H ${neckX.toFixed(2)}`,
+        `V ${topJoinY}`,
+        `L ${joinX} ${topJoinY}`,
+        `A ${rTab} ${rTab} 0 1 1 ${joinX} ${botJoinY}`,
+        `L ${neckX.toFixed(2)} ${botJoinY}`,
+        `V ${(y + W).toFixed(2)}`,
+        `H ${x.toFixed(2)}`,
+        `Z`
+      ].join(' ');
+    }
+
+    function buildSheetSVG(sheetIndex, forExport = false) {
+      const d = getDerivedDimensions();
+      const sheetW = 485;
+      const sheetH = 310;
+
+      const showCut = forExport || document.getElementById('chk-layer-cut')?.checked !== false;
+      const showScore = forExport || document.getElementById('chk-layer-score')?.checked !== false;
+      const showLabels = !forExport && (document.getElementById('chk-layer-labels')?.checked !== false);
+
+      let cutPaths = [];
+      let scorePaths = [];
+      let scoreTexts = [];
+      let previewLabels = [];
+
+      const t = d.t;
+
+      if (sheetIndex === 1) {
+        // PLANCHE 1 : CONDUIT FACE AVANT + DOS (Couchés sur 485×310 mm)
+        const fx = 12, fy = 16;
+        // 1. Face avant du conduit (towerH × towerW = 390 × 110 mm)
+        cutPaths.push(rectPath(fx, fy, d.towerH, d.towerW));
+        // Découpe fenêtre centrale
+        cutPaths.push(rectPath(fx + 24, fy + 22, d.towerH - 24, d.towerW - 44));
+
+        const numSlots = 8;
+        const stepX = (d.towerH - 44) / numSlots;
+        for (let i = 0; i < numSlots; i++) {
+          const sx = fx + 24 + i * stepX;
+          cutPaths.push(rectPath(sx, fy + t, 14, t));
+          cutPaths.push(rectPath(sx, fy + d.towerW - 2 * t, 14, t));
+          scorePaths.push(rectPath(sx + 18, fy + 6, 16, 10, 1.5));
+          scorePaths.push(rectPath(sx + 18, fy + d.towerW - 16, 16, 10, 1.5));
+        }
+        // Briques haut du conduit
+        scorePaths.push(rectPath(fx + 6, fy + 16, 12, 22, 2));
+        scorePaths.push(rectPath(fx + 6, fy + 44, 12, 22, 2));
+        scorePaths.push(rectPath(fx + 6, fy + 72, 12, 22, 2));
+
+        // Gravures Noël sur la Face Avant du conduit (Flocons & Étoiles sur la couronne et les montants)
+        if (state.decoFacade) {
+          scorePaths.push(starVectorPath(fx + 12, fy + d.towerW / 2, 6, 2.5));
+          scorePaths.push(snowflakeVectorPath(fx + 50, fy + 11, 4.5));
+          scorePaths.push(snowflakeVectorPath(fx + 50, fy + d.towerW - 11, 4.5));
+          scorePaths.push(snowflakeVectorPath(fx + 145, fy + 11, 4.5));
+          scorePaths.push(snowflakeVectorPath(fx + 145, fy + d.towerW - 11, 4.5));
+          scorePaths.push(snowflakeVectorPath(fx + 240, fy + 11, 4.5));
+          scorePaths.push(snowflakeVectorPath(fx + 240, fy + d.towerW - 11, 4.5));
+          scorePaths.push(snowflakeVectorPath(fx + 335, fy + 11, 4.5));
+          scorePaths.push(snowflakeVectorPath(fx + 335, fy + d.towerW - 11, 4.5));
+        }
+        previewLabels.push({ x: fx + d.towerH / 2, y: fy + 15, text: `Face Avant Conduit (${d.towerH} × ${d.towerW} mm)` });
+
+        // 2. Dos du conduit (towerH × towerW = 390 × 110 mm)
+        const bx = 12, by = fy + d.towerW + 18;
+        cutPaths.push(rectPath(bx, by, d.towerH, d.towerW));
+        for (let i = 0; i < numSlots; i++) {
+          const sx = bx + 24 + i * stepX;
+          cutPaths.push(rectPath(sx, by + t, 14, t));
+          cutPaths.push(rectPath(sx, by + d.towerW - 2 * t, 14, t));
+        }
+        // Ciel étoilé & flocons gravés à l'intérieur du dos du conduit (visible derrière le Père Noël)
+        if (state.decoFacade) {
+          for (let k = 0; k < 6; k++) {
+            const sx = bx + 48 + k * 55;
+            const sy = by + 34 + (k % 2) * 42;
+            scorePaths.push(k % 2 === 0 ? snowflakeVectorPath(sx, sy, 8) : starVectorPath(sx, sy, 7, 2.8));
+          }
+        }
+        previewLabels.push({ x: bx + d.towerH / 2, y: by + d.towerW / 2, text: `Dos du Conduit (${d.towerH} × ${d.towerW} mm)` });
+
+        // 3. Couronne haute décorative (à droite)
+        const cx = fx + d.towerH + 14, cy = 16;
+        cutPaths.push(rectPath(cx, cy, 62, d.towerW + 8, 2));
+        cutPaths.push(rectPath(cx + 8, cy + 8, 46, d.towerW - 8));
+        previewLabels.push({ x: cx + 31, y: cy + d.towerW + 18, text: `Couronne` });
+
+        // 4. Accessoires Noël 3D imbriqués dans l'espace libre de la Planche 1
+        if (state.deco3D) {
+          // Sapin 3D emboîtable (2 pièces à fente centrale inversée) en bas à droite et en bas
+          const treeW = 54, treeH = 74;
+          const t1x = cx + 31, t1Bottom = 225;
+          const t2x = cx + 31, t2Bottom = 304;
+          cutPaths.push(slottedTreePartPath(t1x, t1Bottom, treeW, treeH, t, true));
+          cutPaths.push(slottedTreePartPath(t2x, t2Bottom, treeW, treeH, t, false));
+          scorePaths.push(starVectorPath(t2x, t2Bottom - treeH + 9, 4.5, 2));
+          previewLabels.push({ x: t1x, y: t1Bottom - 26, text: `Sapin 3D (A)` });
+          previewLabels.push({ x: t2x, y: t2Bottom - 26, text: `Sapin 3D (B)` });
+
+          // 4 Chaussettes de Noël + 4 Étoiles à suspendre/coller en relief (bande basse y=262..302)
+          for (let s = 0; s < 4; s++) {
+            const stX = 16 + s * 45;
+            const stY = 264;
+            cutPaths.push(stockingCutPath(stX, stY, 1.15));
+            // Petit trou d'accroche Ø 2.4mm + couture gravée
+            cutPaths.push(`M ${(stX + 6).toFixed(2)} ${(stY + 3.5).toFixed(2)} a 1.2 1.2 0 1 0 2.4 0 a 1.2 1.2 0 1 0 -2.4 0`);
+            scorePaths.push(`M ${(stX + 5).toFixed(2)} ${(stY + 7).toFixed(2)} H ${(stX + 20).toFixed(2)}`);
+          }
+          previewLabels.push({ x: 95, y: 304, text: `4× Chaussettes de Noël à suspendre` });
+
+          for (let st = 0; st < 4; st++) {
+            const starX = 215 + st * 38;
+            const starY = 282;
+            cutPaths.push(starVectorPath(starX, starY, 14, 6));
+            scorePaths.push(starVectorPath(starX, starY, 8, 3.5));
+          }
+          previewLabels.push({ x: 272, y: 304, text: `4× Étoiles 3D en relief` });
+        }
+
+      } else if (sheetIndex === 2) {
+        // PLANCHE 2 : 2 FLANCS DU CONDUIT (24 FENTES DE 60.4 MM) + PÈRE NOËL + GLISSIÈRE
+        const numSlots = 8;
+        const stepX = (d.towerH - 44) / numSlots;
+        const slotSpan = d.towerH - 54;
+        const pitch = slotSpan / 23;
+
+        for (let side = 0; side < 2; side++) {
+          const sx = 12;
+          const sy = 16 + side * (d.towerD + 18);
+          cutPaths.push(rectPath(sx, sy, d.towerH, d.towerD));
+
+          // Mortaises liaison face/dos
+          for (let i = 0; i < numSlots; i++) {
+            const mx = sx + 24 + i * stepX;
+            cutPaths.push(rectPath(mx, sy, 14, t));
+            cutPaths.push(rectPath(mx, sy + d.towerD - t, 14, t));
+          }
+
+          // 24 Fentes calibrées pour les plateaux de 60 mm de large (d.slotLen × d.slotH)
+          const slotY = sy + (d.towerD - d.slotLen) / 2;
+          for (let n = 0; n < 24; n++) {
+            const slotX = sx + 34 + n * pitch;
+            cutPaths.push(rectPath(slotX, slotY, d.slotH, d.slotLen));
+          }
+          previewLabels.push({
+            x: sx + d.towerH / 2,
+            y: sy + d.towerD + 11,
+            text: `Flanc ${side === 0 ? 'Gauche' : 'Droit'} du Conduit (${d.towerH} × ${d.towerD} mm — 24 fentes de ${d.slotLen} × ${d.slotH} mm)`
+          });
+        }
+
+        // Figurine Père Noël (65 mm) + Socle glissière adapté au plateau 11×6 cm
+        const px = d.towerH + 26, py = 24;
+        // Silhouette Père Noël avec tenon inférieur
+        cutPaths.push(
+          `M ${px + 12} ${py + 62} C ${px + 4} ${py + 44}, ${px + 6} ${py + 16}, ${px + 28} ${py} ` +
+          `C ${px + 50} ${py + 16}, ${px + 52} ${py + 44}, ${px + 44} ${py + 62} ` +
+          `L ${px + 38} ${py + 62} V ${(py + 62 + t).toFixed(2)} H ${px + 18} V ${py + 62} Z`
+        );
+        scorePaths.push(`M ${px + 17} ${py + 24} Q ${px + 28} ${py + 39} ${px + 39} ${py + 24}`);
+        scorePaths.push(`M ${px + 14} ${py + 44} H ${px + 42}`);
+        previewLabels.push({ x: px + 28, y: py + 76, text: `Père Noël (65mm)` });
+
+        // Socle glissière Père Noël (56 × 48 mm)
+        const gx = d.towerH + 20, gy = 115;
+        cutPaths.push(rectPath(gx, gy, 56, 48, 3));
+        cutPaths.push(rectPath(gx + 18, gy + 24 - t / 2, 20, t));
+        previewLabels.push({ x: gx + 28, y: gy + 60, text: `Socle Père Noël` });
+
+        // Accessoires Noël 3D dans la bande libre du bas de la Planche 2 (y = 220..302)
+        if (state.deco3D) {
+          // 1. Feu de cheminée à emboîter dans l'âtre (Flammes + Socle Bûches)
+          const fx = 20, fy = 224;
+          // Silhouette Flammes avec tenon inférieur de largeur 24mm
+          cutPaths.push(
+            `M ${fx + 8} ${fy + 58} C ${fx - 2} ${fy + 40}, ${fx + 4} ${fy + 18}, ${fx + 18} ${fy + 6} ` +
+            `C ${fx + 22} ${fy + 18}, ${fx + 26} ${fy + 22}, ${fx + 30} ${fy} ` +
+            `C ${fx + 38} ${fy + 16}, ${fx + 42} ${fy + 22}, ${fx + 44} ${fy + 10} ` +
+            `C ${fx + 56} ${fy + 24}, ${fx + 58} ${fy + 42}, ${fx + 50} ${fy + 58} ` +
+            `H ${fx + 41} V ${(fy + 58 + t).toFixed(2)} H ${fx + 17} V ${fy + 58} Z`
+          );
+          scorePaths.push(`M ${fx + 18} ${fy + 52} Q ${fx + 29} ${fy + 24} ${fx + 38} ${fy + 52}`);
+          scorePaths.push(`M ${fx + 24} ${fy + 54} Q ${fx + 30} ${fy + 35} ${fx + 34} ${fy + 54}`);
+          previewLabels.push({ x: fx + 29, y: fy + 72, text: `Flammes de l'âtre` });
+
+          // Socle Bûches pour les flammes
+          const lx = 92, ly = 238;
+          cutPaths.push(rectPath(lx, ly, 60, 36, 6));
+          cutPaths.push(rectPath(lx + 18, ly + 18 - t / 2, 24, t));
+          scorePaths.push(rectPath(lx + 6, ly + 6, 48, 8, 2));
+          scorePaths.push(rectPath(lx + 6, ly + 22, 48, 8, 2));
+          previewLabels.push({ x: lx + 30, y: ly + 48, text: `Socle Bûches` });
+
+          // 2. Renne de Noël + son socle
+          const rx = 172, ry = 222;
+          cutPaths.push(
+            `M ${rx + 10} ${ry + 60} L ${rx + 12} ${ry + 34} L ${rx + 6} ${ry + 28} L ${rx + 14} ${ry + 24} ` +
+            `L ${rx + 32} ${ry + 24} L ${rx + 38} ${ry + 8} L ${rx + 30} ${ry} L ${rx + 42} ${ry + 6} ` +
+            `L ${rx + 48} ${ry} L ${rx + 45} ${ry + 12} L ${rx + 54} ${ry + 16} L ${rx + 46} ${ry + 26} ` +
+            `L ${rx + 46} ${ry + 60} H ${rx + 38} V ${(ry + 60 + t).toFixed(2)} H ${rx + 18} V ${ry + 60} Z`
+          );
+          scorePaths.push(starVectorPath(rx + 28, ry + 36, 5, 2));
+          previewLabels.push({ x: rx + 30, y: ry + 74, text: `Renne de Noël` });
+
+          const rsx = 242, rsy = 238;
+          cutPaths.push(rectPath(rsx, rsy, 48, 34, 6));
+          cutPaths.push(rectPath(rsx + 14, rsy + 17 - t / 2, 20, t));
+          previewLabels.push({ x: rsx + 24, y: rsy + 46, text: `Socle Renne` });
+
+          // 3. Trois grands Flocons de neige à suspendre ou coller
+          for (let fl = 0; fl < 3; fl++) {
+            const fcx = 326 + fl * 52;
+            const fcy = 258;
+            cutPaths.push(`M ${(fcx - 20).toFixed(2)} ${fcy} a 20 20 0 1 0 40 0 a 20 20 0 1 0 -40 0`);
+            cutPaths.push(`M ${(fcx - 1.2).toFixed(2)} ${(fcy - 16).toFixed(2)} a 1.2 1.2 0 1 0 2.4 0 a 1.2 1.2 0 1 0 -2.4 0`);
+            scorePaths.push(snowflakeVectorPath(fcx, fcy + 1, 13));
+          }
+          previewLabels.push({ x: 378, y: 292, text: `3× Médaillons Flocons de Noël (Ø 40 mm)` });
+        }
+
+      } else if (sheetIndex === 3) {
+        // PLANCHE 3 : FOYER BAS COMPLET (Arche, Dos, 2 Flancs, Tablette, Socle arrondi)
+        const bfx = 12, bfy = 12;
+        const archW = 78, archH = 105;
+        const archX1 = bfx + (d.baseW - archW) / 2;
+        const archX2 = archX1 + archW;
+        const archBottom = bfy + d.baseH;
+        const archR = archW / 2;
+        const archStraightTop = archBottom - (archH - archR);
+
+        // 1. Face avant Foyer avec arche
+        cutPaths.push(
+          `M ${bfx} ${bfy} h ${d.baseW} v ${d.baseH} H ${archX2} ` +
+          `L ${archX2} ${archStraightTop} A ${archR} ${archR} 0 0 0 ${archX1} ${archStraightTop} ` +
+          `L ${archX1} ${archBottom} H ${bfx} Z`
+        );
+        for (let r = 0; r < 5; r++) {
+          const byBrick = bfy + 16 + r * 28;
+          const bw = (r % 2 === 0) ? 28 : 20;
+          scorePaths.push(rectPath(bfx + 10, byBrick, bw, 16, 2));
+          scorePaths.push(rectPath(bfx + d.baseW - 10 - bw, byBrick, bw, 16, 2));
+        }
+
+        // Gravure Noël sur le linteau du Foyer (Cartouche + Texte personnalisé + Étoiles/Flocons)
+        if (state.decoFacade) {
+          const fcx = bfx + d.baseW / 2;
+          scorePaths.push(rectPath(fcx - 48, bfy + 12, 96, 18, 3));
+          scorePaths.push(starVectorPath(fcx - 40, bfy + 21, 4.5, 2));
+          scorePaths.push(starVectorPath(fcx + 40, bfy + 21, 4.5, 2));
+          scorePaths.push(snowflakeVectorPath(bfx + 24, bfy + 36, 5));
+          scorePaths.push(snowflakeVectorPath(bfx + d.baseW - 24, bfy + 36, 5));
+          if (state.mantelText) {
+            scoreTexts.push(`<text x="${fcx.toFixed(2)}" y="${(bfy + 24.5).toFixed(2)}" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="none" stroke="#0000ff" stroke-width="0.35">${state.mantelText}</text>`);
+          }
+        }
+        previewLabels.push({ x: bfx + d.baseW / 2, y: bfy + 8, text: `Arche Foyer (${d.baseW}×${d.baseH} mm)` });
+
+        // 2. Dos du Foyer
+        const bbx = bfx + d.baseW + 12, bby = 12;
+        cutPaths.push(rectPath(bbx, bby, d.baseW, d.baseH));
+        previewLabels.push({ x: bbx + d.baseW / 2, y: bby + d.baseH / 2, text: `Dos Foyer (${d.baseW}×${d.baseH} mm)` });
+
+        // 3. Flancs du Foyer (×2)
+        const s1x = bbx + d.baseW + 12, s1y = 12;
+        cutPaths.push(rectPath(s1x, s1y, d.baseD, d.baseH));
+        previewLabels.push({ x: s1x + d.baseD / 2, y: s1y + d.baseH / 2, text: `Flanc Foyer 1` });
+
+        const s2x = 12, s2y = bfy + d.baseH + 12;
+        cutPaths.push(rectPath(s2x, s2y, d.baseH, d.baseD));
+        previewLabels.push({ x: s2x + d.baseH / 2, y: s2y + d.baseD / 2, text: `Flanc Foyer 2 (${d.baseH}×${d.baseD} mm)` });
+
+        // 4. Tablette supérieure à trappe centrale
+        const mx = s2x + d.baseH + 12, my = s2y;
+        const mantelW = d.baseW + 14, mantelD = d.baseD + 10;
+        cutPaths.push(rectPath(mx, my, mantelW, mantelD, 3));
+        cutPaths.push(rectPath(mx + (mantelW - d.towerW) / 2, my + (mantelD - d.towerD) / 2, d.towerW, d.towerD));
+        previewLabels.push({ x: mx + mantelW / 2, y: my + 12, text: `Tablette à trappe (${mantelW}×${mantelD} mm)` });
+
+        // 5. Socle inférieur arrondi
+        const socX = mx + mantelW + 10, socY = s2y;
+        const socW = d.baseW + 10, socD = d.baseD + 8;
+        cutPaths.push(rectPath(socX, socY, socW, socD, 8));
+        previewLabels.push({ x: socX + socW / 2, y: socY + socD / 2, text: `Socle Bas (${socW}×${socD} mm)` });
+
+      } else if (sheetIndex === 4 || sheetIndex === 5) {
+        // PLANCHE 4 (Jours 1 à 12) & PLANCHE 5 (Jours 13 à 24)
+        // Grille de 3 colonnes × 4 lignes de plateaux 110 × 60 mm + médaillon Ø22mm
+        // Largeur d'un plateau avec médaillon = 110 + 24 = 134 mm (×3 = 402 mm < 485 mm)
+        // Hauteur de 4 lignes de 60 mm = 240 mm + marges = 282 mm (< 310 mm)
+        const startNum = sheetIndex === 4 ? 1 : 13;
+        const cols = 3;
+        const rows = 4;
+        const pitchX = d.slatL + 34; // 144 mm
+        const pitchY = d.slatW + 10; // 70 mm
+        const startX = 18;
+        const startY = 16;
+
+        for (let idx = 0; idx < 12; idx++) {
+          const dayNum = startNum + idx;
+          const col = idx % cols;
+          const row = Math.floor(idx / cols);
+          const x = startX + col * pitchX;
+          const y = startY + row * pitchY;
+
+          // Découpe monobloc : rectangle 110×60 mm + médaillon circulaire Ø22mm
+          cutPaths.push(slatWithTabPath(x, y, d.slatL, d.slatW));
+
+          // Gravure bleue du cercle interne + chiffre du jour
+          const rInner = 8.5;
+          const tabCx = (x + d.slatL + 13).toFixed(2);
+          const tabCy = (y + d.slatW / 2).toFixed(2);
+          scorePaths.push(`M ${(tabCx - rInner).toFixed(2)} ${tabCy} a ${rInner} ${rInner} 0 1 0 ${(2 * rInner).toFixed(2)} 0 a ${rInner} ${rInner} 0 1 0 ${(-2 * rInner).toFixed(2)} 0`);
+          scoreTexts.push(`<text x="${tabCx}" y="${(parseFloat(tabCy) + 3.6).toFixed(2)}" font-family="Arial, sans-serif" font-size="10.5" font-weight="bold" text-anchor="middle" fill="none" stroke="#0000ff" stroke-width="0.4">${dayNum}</text>`);
+
+          // Gravure Noël sur chaque plateau 11×6 cm (Cadre fin + Motif festif selon le jour)
+          if (state.decoSlats) {
+            scorePaths.push(rectPath(x + 4, y + 4, d.slatL - 8, d.slatW - 8, 2));
+            const mCx = x + 22;
+            const mCy = y + d.slatW / 2;
+            const motifType = dayNum % 4;
+            if (motifType === 1) {
+              scorePaths.push(snowflakeVectorPath(mCx, mCy, 11));
+            } else if (motifType === 2) {
+              scorePaths.push(miniPineVectorPath(mCx, mCy - 2, 10));
+            } else if (motifType === 3) {
+              scorePaths.push(starVectorPath(mCx, mCy, 11, 4.5));
+            } else {
+              scorePaths.push(giftVectorPath(mCx, mCy, 9));
+            }
+            // Deux petites étoiles dans les coins droits du plateau
+            scorePaths.push(starVectorPath(x + d.slatL - 10, y + 10, 3.2, 1.3));
+            scorePaths.push(starVectorPath(x + d.slatL - 10, y + d.slatW - 10, 3.2, 1.3));
+          }
+
+          previewLabels.push({
+            x: x + d.slatL / 2 + 6,
+            y: y + d.slatW / 2 + 3,
+            text: `Plateau Jour ${dayNum} (${d.slatL} × ${d.slatW} mm)`
+          });
+        }
+      }
+
+      const borderGuide = !forExport
+        ? `<rect x="1" y="1" width="${sheetW - 2}" height="${sheetH - 2}" fill="none" stroke="#64748b" stroke-width="0.8" stroke-dasharray="5,5"/>`
+        : '';
+
+      const labelsGroup = showLabels
+        ? `<g id="APERCU_LABELS" font-family="Inter, sans-serif" font-size="7.5" font-weight="600" fill="#059669" text-anchor="middle">
+            ${previewLabels.map(l => `<text x="${l.x.toFixed(1)}" y="${l.y.toFixed(1)}">${l.text}</text>`).join('\n            ')}
+           </g>`
+        : '';
+
+      const scoreGroup = showScore
+        ? `<g id="MARQUAGE_GRAVURE" fill="none" stroke="#0000ff" stroke-width="0.4">
+            ${scorePaths.map(p => `<path d="${p}"/>`).join('\n            ')}
+            ${scoreTexts.join('\n            ')}
+           </g>`
+        : '';
+
+      const cutGroup = showCut
+        ? `<g id="DECOUPE_LASER" fill="none" stroke="#ff0000" stroke-width="0.35">
+            ${cutPaths.map(p => `<path d="${p}"/>`).join('\n            ')}
+           </g>`
+        : '';
+
+      return `<svg id="svg-sheet-${sheetIndex}" xmlns="http://www.w3.org/2000/svg" width="${sheetW}mm" height="${sheetH}mm" viewBox="0 0 ${sheetW} ${sheetH}" class="bg-white shadow-inner rounded border border-slate-300">
+        ${borderGuide}
+        ${scoreGroup}
+        ${cutGroup}
+        ${labelsGroup}
+      </svg>`;
+    }
+
+    function selectSheet(sheetNum) {
+      state.currentSheet = sheetNum;
+      for (let i = 0; i <= 5; i++) {
+        const tab = document.getElementById(`tab-sheet-${i}`);
+        if (!tab) continue;
+        if (i === sheetNum) {
+          tab.className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold transition bg-rose-600 text-white shadow" + (i === 0 ? " ml-auto" : "");
+        } else {
+          tab.className = "px-2.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-300 hover:text-white" + (i === 0 ? " text-amber-400 ml-auto" : "");
+        }
+      }
+
+      const dlBtnText = document.getElementById('btn-dl-current-text');
+      if (dlBtnText) {
+        dlBtnText.textContent = sheetNum === 0 ? 'Exporter les 5 Planches (.SVG)' : `Exporter Planche ${sheetNum} (.SVG)`;
+      }
+
+      const summaries = {
+        0: "Vue Globale des 5 Planches xTool S1 (485 × 310 mm chacune) — Plateaux journaliers 11 × 6 cm.",
+        1: "Planche 1 : Face avant ajourée du conduit, Dos du conduit et Couronne haute (Format 485 × 310 mm).",
+        2: "Planche 2 : Les 2 Flancs à 24 fentes de 60,4 mm + Figurine Père Noël (65 mm) et son socle.",
+        3: "Planche 3 : Foyer bas complet (Arche en pierres, Dos, 2 Flancs, Tablette à trappe et Socle arrondi).",
+        4: "Planche 4 : Plateaux Jours 1 à 12 — Dimensions exactes 110 × 60 mm (11 × 6 cm) + médaillon Ø22 mm.",
+        5: "Planche 5 : Plateaux Jours 13 à 24 — Dimensions exactes 110 × 60 mm (11 × 6 cm) + médaillon Ø22 mm."
+      };
+      const summaryEl = document.getElementById('sheet-parts-summary');
+      if (summaryEl) summaryEl.textContent = summaries[sheetNum] || '';
+
+      renderCADSheets();
+    }
+
+    function renderCADSheets() {
+      const wrapper = document.getElementById('cad-canvas-wrapper');
+      if (!wrapper) return;
+
+      if (state.currentSheet === 0) {
+        let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+        for (let s = 1; s <= 5; s++) {
+          html += `
+            <div class="bg-slate-100 p-2.5 rounded-xl border border-slate-300 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5 px-1">
+                <span class="text-xs font-bold text-slate-800">Planche ${s} (485 × 310 mm)</span>
+                <button onclick="downloadSingleSheet(${s})" class="text-[11px] font-semibold text-rose-600 hover:underline">Télécharger .SVG</button>
+              </div>
+              ${buildSheetSVG(s, false)}
+            </div>
+          `;
+        }
+        html += '</div>';
+        wrapper.innerHTML = html;
+      } else {
+        wrapper.innerHTML = buildSheetSVG(state.currentSheet, false);
+      }
+    }
+
+    function zoomCAD(delta) {
+      state.cadZoom = Math.max(0.6, Math.min(2.2, +(state.cadZoom + delta).toFixed(2)));
+      applyCADZoom();
+    }
+
+    function resetCADZoom() {
+      state.cadZoom = 1.0;
+      applyCADZoom();
+    }
+
+    function applyCADZoom() {
+      const wrapper = document.getElementById('cad-canvas-wrapper');
+      const label = document.getElementById('zoom-level-label');
+      if (wrapper) wrapper.style.transform = `scale(${state.cadZoom})`;
+      if (label) label.textContent = `${Math.round(state.cadZoom * 100)}%`;
+    }
+
+    // =========================================================================
+    // SVG FILE EXPORT (1:1 MILLIMETERS FOR XTOOL CREATIVE SPACE)
+    // =========================================================================
+    function downloadSingleSheet(sheetNum) {
+      const d = getDerivedDimensions();
+      const svgContent = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' + buildSheetSVG(sheetNum, true);
+      const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+
+      const sheetNames = {
+        1: `Planche_1_Conduit_Avant_Dos_${d.towerH}mm.svg`,
+        2: `Planche_2_Flancs_24Fentes_${d.slatW}mm_PereNoel.svg`,
+        3: `Planche_3_Foyer_Cheminee_Base.svg`,
+        4: `Planche_4_Plateaux_Jours_01_a_12_${d.slatL}x${d.slatW}mm.svg`,
+        5: `Planche_5_Plateaux_Jours_13_a_24_${d.slatL}x${d.slatW}mm.svg`
+      };
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = sheetNames[sheetNum] || `Planche_${sheetNum}_Cheminee_xTool_S1.svg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast(`Planche ${sheetNum} exportée en .SVG (échelle 1:1 mm) !`);
+    }
+
+    function downloadCurrentSheet() {
+      if (state.currentSheet === 0) {
+        downloadAllSVGs();
+      } else {
+        downloadSingleSheet(state.currentSheet);
+      }
+    }
+
+    function downloadAllSVGs() {
+      for (let s = 1; s <= 5; s++) {
+        setTimeout(() => downloadSingleSheet(s), (s - 1) * 280);
+      }
+    }
+
+    function openXcsModal() {
+      const modal = document.getElementById('xcs-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeXcsModal() {
+      const modal = document.getElementById('xcs-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast-msg');
+      const text = document.getElementById('toast-text');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3200);
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      onParamChange();
+      selectSheet(4); // Affiche par défaut la Planche 4 avec les plateaux de 11 × 6 cm
+    });
   </script>
 </body>
 </html>
